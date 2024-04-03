@@ -1,0 +1,41 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  height: 100vh;
+}
+
+h2 {
+  font-size: 1rem !important;
+}
+
+.filter-buttons > .filter-btn {
+  font-size: 1rem;
+  border-radius: 0;
+  width: 100%;
+}
+
+label.btn:hover {
+  background-color: rgba(181, 181, 181, 0.122) !important;
+}
+
+#root > div > form > div.row.row-cols-3 > div.col.region-col > div > div > div.css-b62m3t-container > div.css-1nmdiq5-menu {
+  position: absolute;
+}
+
+div.dropdown {
+  height: 350px;
+}
+
+#year-col > div.dropdown > div > div.css-13cymwt-control {
+  overflow: hidden;
+}
+
+.css-tr4s17-option {
+  background-color: #0d6efd !important;
+}
+
+.css-4xgw5l-IndicatorsContainer2 > div > svg {
+  fill: hsl(0, 0%, 80%);
+}
