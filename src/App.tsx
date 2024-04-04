@@ -92,7 +92,7 @@ function App() {
     <>
       {!validQuery && (
         <>
-          <h1>Statistikk Portal</h1>
+          <h1 className='pt-5 pb-3'>Statistikk Portal</h1>
           <div className='container text-center'>
             <form onSubmit={handleSubmit}>
               <div className='row row-cols-3'>
