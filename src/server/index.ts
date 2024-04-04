@@ -32,6 +32,8 @@ app.get('/api/:region', async (req, res) => {
     regionFilter = regionNamesArr
       .map((value: string, index: number) => ({ navn: value, kode: regionCodesArr[index] }))
       .filter((k: Region) => k.kode.length > 2 && k.kode !== '0');
+  } else if (region === 'alle') {
+    regionFilter = regionNamesArr.map((value: string, index: number) => ({ navn: value, kode: regionCodesArr[index] }));
   }
 
   res.json(regionFilter);
