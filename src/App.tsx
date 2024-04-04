@@ -1,116 +1,88 @@
 import './App.css';
 import Table from './Table';
-import { useState, useEffect } from 'react';
-import Select, { components } from 'react-select';
-import AsyncSelect from 'react-select/async';
+import { useState } from 'react';
+import Selections from './Selections';
+import errorCheck from './utils';
 
 function App() {
   const [validQuery, setValidQuery] = useState(false);
-  const [regionQuery, setRegionQuery] = useState('0');
-  const [region, setRegion] = useState([
-    { navn: 'Kristiansund', kode: '32' },
-    { navn: 'Trondheim', kode: '50' },
-    { navn: 'Møre Og Romsdal', kode: '5050' },
-    { navn: 'Kaqwe', kode: '322' },
-    { navn: 'sdfzxc', kode: '56' },
-    { navn: 'eeee', kode: '28' },
-    { navn: 'keeaa', kode: '37' },
-    { navn: 'Oppdøl', kode: '52' },
-    { navn: 'Møre', kode: '505023' },
-    { navn: 'Kristiazxcnsund', kode: '3cv2' },
-    { navn: 'Trondwheim', kode: '5a0' },
-    { navn: 'Møre Ogxca Romsdal', kode: '505ew0' },
-    { navn: 'Karsdqwe', kode: '3x22' },
-    { navn: 'sdfazxc', kode: '5w6' },
-    { navn: 'edfeee', kode: '28xc' },
-    { navn: 'keeaasda', kode: '3we7' },
-    { navn: 'Oppxcdøl', kode: '52df' },
-    { navn: 'Mørsde', kode: '50502we3' },
-  ]);
-
+  const [regionQuery, setRegionQuery] = useState('');
+  const [region, setRegion] = useState([]);
+  const [error, setError] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-
   const [selected, setSelected] = useState({
     variabel: [{}],
     year: [{}],
     region: [{}],
   });
 
-  const DropdownIndicator = (props: any) => {
-    return (
-      <components.DropdownIndicator {...props}>
-        <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='20' height='15' viewBox='0 0 50 50'>
-          <path d='M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z'></path>
-        </svg>
-      </components.DropdownIndicator>
-    );
-  };
-
   const handleSelect = (event: any, type: string) => {
     setSelected((prev) => ({ ...prev, [type]: event }));
   };
 
-  const yearOptions = Array.from({ length: 18 }, (_, index) => {
-    const year = 2007 + index;
-    return { value: year.toString(), label: year.toString() };
-  });
-
-  const regionOptions = () => {
-    const filteredOptions = region.filter((e) => e.navn.toLowerCase().trim().includes(searchTerm));
-    const regionOptions = filteredOptions.map((e) => ({ value: e.kode, label: e.navn }));
-    return regionOptions;
-  };
-
-  const variabelOptions = () => {
-    return [
-      { value: 'Folkemengde', label: 'Befolkning per 1.1. (personer)' },
-      { value: 'ArealKm2', label: 'Areal (km²)' },
-      { value: 'LandArealKm2', label: 'Landareal (km²)' },
-      { value: 'FolkeLandArealKm2', label: 'Innbyggere per km² landareal' },
-    ];
-  };
-
-  // useEffect(() => {
-  //   region.forEach((e: any) => {
-  //     console.log(e.kode);
-  //   });
-  // }, [region]);
-
-  // const getRegion = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   if (event.target.value === '0') {
-  //     return;
-  //   } else {
-  //     const query = event.target.value;
-  //     const response = await fetch(`http://localhost:5173/api/${query}`);
-  //     const data = await response.json();
-  //     setRegion(data);
-  //   }
-  // };
-
-  // dummyRegion
   const getRegion = async (event: any) => {
+    setRegion([]);
+    setRegionQuery('');
     if (event.target.value === '0') {
       return;
     } else {
-      const index = event.nativeEvent.target.selectedIndex;
-      setRegionQuery(event.nativeEvent.target[index].text.toLowerCase());
+      const query = event.target.value;
+      const response = await fetch(`http://localhost:5173/api/${query}`);
+      const data = await response.json();
+      setRegion(data);
+      setRegionQuery(query);
     }
   };
+
+  // dummyRegion
+  // const getRegion = async (event: any) => {
+  //   if (event.target.value === '0') {
+  //     return;
+  //   } else {
+  //     const index = event.nativeEvent.target.selectedIndex;
+  //     console.log(index);
+  //     setRegionQuery(event.nativeEvent.target[index].text.toLowerCase());
+  //   }
+  // };
+  // const errorCheck = (selectedOptions) => {
+  //   let errorFound = false;
+
+  //   if (selectedOptions.variabel.length > 1) {
+  //     console.log('over 1');
+  //     setError((prev) => [...prev, 'variabel']);
+  //     errorFound = true;
+  //   }
+
+  //   if (selectedOptions.region.length < 2) {
+  //     setError((prev) => [...prev, 'region']);
+  //     errorFound = true;
+  //   }
+
+  //   if (selectedOptions.year.length < 3) {
+  //     setError((prev) => [...prev, 'year']);
+  //     errorFound = true;
+  //   }
+  //   return errorFound;
+  // };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
+    setValidQuery(false);
+
     const selectedOptions = selected;
 
-    if (selectedOptions.year.length < 3) {
-      console.log('error from year');
-    }
+    const errors = errorCheck(selectedOptions);
 
-    if (selectedOptions.region.length < 2) {
-      event.stopPropagation();
+    if (errors[0]) {
+      setError(errors[1]);
+      return;
+    } else {
+      setError([]);
     }
 
     try {
+      console.log('trying to fetch data..');
       const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
@@ -132,59 +104,38 @@ function App() {
     <>
       <h1>Statistikk Portal</h1>
       <div className='container text-center'>
-        <form onSubmit={handleSubmit} needs-validation>
+        <form onSubmit={handleSubmit}>
           <div className='row row-cols-3'>
             <div className='col statistikk-col'>
-              <h2>Statistikk (Påkrevd*)</h2>
-              <Select
-                name='variabel'
-                value={selected.variabel.filter((e) => Object.keys(e).length !== 0)}
-                options={variabelOptions()}
-                onChange={(e) => handleSelect(e, 'variabel')}
-                isMulti
-                menuIsOpen
-                maxMenuHeight={250}
-                placeholder='Søk etter variabel..'
-                hideSelectedOptions={false}
-                components={{ DropdownIndicator }}
-                styles={{
-                  valueContainer: (baseStyles) => ({
-                    ...baseStyles,
-                    maxHeight: '3rem',
-                    overflow: 'auto',
-                  }),
-                }}
-                required
-              />
+              <h2 className={error.includes('variabel') ? 'red' : ''}>Statistikk (Påkrevd*)</h2>
+              {error.includes('variabel') && (
+                <div className='alert alert-danger p-1 my-2' role='alert'>
+                  Kun 1 variabel tillatt
+                </div>
+              )}
+              <div className='dropdown'>
+                <Selections selected={selected.variabel} name='variabel' handleSelect={handleSelect} />
+              </div>
             </div>
             <div className='col' id='year-col'>
-              <h2>Årstall (Påkrevd*)</h2>
+              <h2 className={error.includes('year') ? 'red' : ''}>Årstall (Påkrevd*)</h2>
+              {error.includes('year') && (
+                <div className='alert alert-danger p-2 my-2' role='alert'>
+                  Minst 3 årstall påkrevd!
+                </div>
+              )}
               <div className='dropdown'>
-                <Select
-                  name='year'
-                  value={selected.year.filter((e) => Object.keys(e).length !== 0)}
-                  options={yearOptions}
-                  onChange={(e) => handleSelect(e, 'year')}
-                  isMulti
-                  menuIsOpen
-                  maxMenuHeight={250}
-                  placeholder='Søk etter årstall..'
-                  hideSelectedOptions={false}
-                  components={{ DropdownIndicator }}
-                  styles={{
-                    valueContainer: (baseStyles) => ({
-                      ...baseStyles,
-                      maxHeight: '3rem',
-                      overflow: 'auto',
-                    }),
-                  }}
-                  required
-                />
+                <Selections selected={selected.year} name='year' handleSelect={handleSelect} />
               </div>
             </div>
             <div className='col region-col'>
-              <h2>Region (Påkrevd*)</h2>
-              <select id='region' className=' mb-2 form-select' aria-label='Default select example' onChange={getRegion}>
+              <h2 className={error.includes('region') ? 'red' : ''}>Region (Påkrevd*)</h2>
+              {error.includes('region') && (
+                <div className='alert alert-danger p-2 my-2' role='alert'>
+                  Minst 2 regioner påkrevd!
+                </div>
+              )}
+              <select id='region' className=' mb-2 form-select' aria-label='Velg Inndeling (Fylke eller Kommune)' onChange={getRegion}>
                 <option className='text-center' value='0'>
                   -- Velg inndeling --
                 </option>
@@ -196,27 +147,9 @@ function App() {
                 <div className='velg-region'>
                   <div>
                     <div className='dropdown'>
-                      <Select
-                        name='region'
-                        value={selected.region.filter((e) => Object.keys(e).length !== 0)}
-                        placeholder={`Søk i ${regionQuery}..`}
-                        options={regionOptions()}
-                        onChange={(e) => handleSelect(e, 'region')}
-                        isMulti
-                        menuIsOpen
-                        maxMenuHeight={250}
-                        hideSelectedOptions={false}
-                        components={{ DropdownIndicator }}
-                        styles={{
-                          valueContainer: (baseStyles) => ({
-                            ...baseStyles,
-                            maxHeight: '3rem',
-                            overflow: 'auto',
-                          }),
-                        }}
-                        required
-                      />
+                      <Selections selected={selected.region} name='region' handleSelect={handleSelect} region={region} regionQuery={regionQuery} />
                     </div>
+                    {regionQuery && <span>{region.length} resultater</span>}
                   </div>
                 </div>
               )}
