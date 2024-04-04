@@ -1,17 +1,32 @@
 import express from 'express';
+import { tableUrl, createTableQuery } from './tableData';
 import { Region } from '../types';
 
 const app = express();
 const port = 3000;
 
-const tableUrl = 'https://data.ssb.no/api/v0/no/table/11342/';
-let tableData: null | {} = null;
-
 app.use(express.json());
 
-app.post('/api/submit', (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
+app.post('/api/submit', async (req, res) => {
+  const selectedOptions = req.body;
+  const selectionQuery = createTableQuery(selectedOptions);
+
+  try {
+    const externalResponse = await fetch(tableUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectionQuery),
+    });
+
+    const externalData = await externalResponse.json();
+    console.log(externalData);
+    res.send(externalData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
 });
 
 app.get('/api/:region', async (req, res) => {

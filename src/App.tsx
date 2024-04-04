@@ -71,6 +71,7 @@ function App() {
     setValidQuery(false);
 
     const selectedOptions = selected;
+    // console.log(selectedOptions.region);
 
     const errors = errorCheck(selectedOptions);
 
@@ -93,6 +94,7 @@ function App() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       } else if (response.ok) {
+        console.log(response);
         setValidQuery(true);
       }
     } catch (error) {
@@ -120,7 +122,7 @@ function App() {
             <div className='col' id='year-col'>
               <h2 className={error.includes('year') ? 'red' : ''}>Årstall (Påkrevd*)</h2>
               {error.includes('year') && (
-                <div className='alert alert-danger p-2 my-2' role='alert'>
+                <div className='alert alert-danger p-1 my-2' role='alert'>
                   Minst 3 årstall påkrevd!
                 </div>
               )}
@@ -131,7 +133,7 @@ function App() {
             <div className='col region-col'>
               <h2 className={error.includes('region') ? 'red' : ''}>Region (Påkrevd*)</h2>
               {error.includes('region') && (
-                <div className='alert alert-danger p-2 my-2' role='alert'>
+                <div className='alert alert-danger p-1 my-2' role='alert'>
                   Minst 2 regioner påkrevd!
                 </div>
               )}
