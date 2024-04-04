@@ -22,7 +22,7 @@ app.post('/api/submit', async (req, res) => {
 
     const externalData = await externalResponse.json();
     console.log(externalData);
-    res.send(externalData);
+    res.json(externalData);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Something went wrong' });
