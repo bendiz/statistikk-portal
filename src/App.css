@@ -1,7 +1,5 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   height: 100vh;
 }
@@ -38,4 +36,15 @@ div.dropdown {
 
 .css-4xgw5l-IndicatorsContainer2 > div > svg {
   fill: hsl(0, 0%, 80%);
+}
+
+.table {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.navbar .container-fluid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
 }

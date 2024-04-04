@@ -1,4 +1,4 @@
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import DropdownIndicator from './DropdownIndicator';
 
 const variabelOptions = () => {
@@ -16,7 +16,7 @@ const yearOptions = Array.from({ length: 18 }, (_, index) => {
 });
 
 const regionOptions = (region: any) => {
-  return region.map((e) => ({ value: e.kode, label: e.navn }));
+  return region.map((e: any) => ({ value: e.kode, label: e.navn }));
 };
 
 function Selections(props: any) {
@@ -33,7 +33,7 @@ function Selections(props: any) {
 
   return (
     <Select
-      value={props.selected.filter((e) => Object.keys(e).length !== 0)}
+      value={props.selected.filter((e: any) => Object.keys(e).length !== 0)}
       options={options}
       onChange={(e) => props.handleSelect(e, props.name)}
       isMulti

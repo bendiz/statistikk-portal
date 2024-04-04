@@ -1,7 +1,9 @@
 import './App.css';
-import Table from './Table';
+import Navbar from './components/Navbar';
+import Table from './components/Table';
+import StatisticsTable from './components/StatisticsTable';
 import { useState } from 'react';
-import Selections from './Selections';
+import Selections from './components/Selections';
 import errorCheck from './utils';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
     year: [],
     values: [],
   });
+
+  const [statistics, setStatistics] = useState(false);
 
   const handleSelect = (event: any, type: string) => {
     setSelected((prev) => ({ ...prev, [type]: event }));
@@ -78,6 +82,10 @@ function App() {
     } catch (error) {
       console.log('error', error);
     }
+  };
+
+  const renderStatisticsTable = () => {
+    setStatistics(true);
   };
 
   return (
@@ -152,7 +160,13 @@ function App() {
           </div>
         </>
       )}
-      {validQuery && <Table data={tableData} setSize={selected.year.length} />}
+      {validQuery && (
+        <>
+          <Navbar changeQuery={() => setValidQuery(false)} renderStatisticsTable={renderStatisticsTable} />
+          <Table data={tableData} setSize={selected.year.length} />
+          {statistics && <StatisticsTable data={tableData} />}
+        </>
+      )}
     </>
   );
 }
