@@ -24,11 +24,6 @@ export default function Navbar(props: any) {
                 Gå tilbake
               </a>
             </li>
-            <li className='nav-item'>
-              <a className='nav-link' onClick={props.renderStatisticsTable}>
-                Utfør beregninger
-              </a>
-            </li>
           </ul>
         </div>
       </div>

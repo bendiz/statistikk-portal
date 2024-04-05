@@ -1,10 +1,21 @@
+import { calculateMin, calculateMax, calculateAvg, calculateMedian } from '../utils';
+
 export default function Table(props: any) {
-  console.log(props.data);
-
   const dataLength = props.data.year.length;
+  const reorderRegions = (regions: string[], newOrder: number[]) => {
+    const tempArray = new Array(regions.length);
 
-  const tableData = props.data.region.map((region: string, index: number) => {
-    const startIndex = index * dataLength;
+    newOrder.forEach((newIndex, oldIndex) => {
+      tempArray[newIndex] = regions[oldIndex];
+    });
+
+    return tempArray;
+  };
+
+  const sortedRegions = reorderRegions(props.data.region, props.data.indexes);
+
+  const tableData = sortedRegions.map((region: string, index: number) => {
+    const startIndex = index === 0 ? 0 : index * dataLength;
     const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
     return (
       <tr>
@@ -14,6 +25,10 @@ export default function Table(props: any) {
         {regionValues.map((value: number) => (
           <td>{value}</td>
         ))}
+        <td className='border-control'>{Math.trunc(calculateMedian(regionValues))}</td>
+        <td>{Math.trunc(calculateAvg(regionValues))}</td>
+        <td>{calculateMin(regionValues)}</td>
+        <td>{calculateMax(regionValues)}</td>
       </tr>
     );
   });
@@ -25,7 +40,7 @@ export default function Table(props: any) {
           <th colSpan={1} rowSpan={2} className='table-info'>
             Region
           </th>
-          <th scope='col' colSpan={dataLength} className='table-info'>
+          <th scope='col' colSpan={dataLength + 4} className='table-info'>
             {props.data.variable}
           </th>
         </tr>
@@ -33,6 +48,12 @@ export default function Table(props: any) {
           {props.data.year.map((year: any) => (
             <th scope='col'>{year}</th>
           ))}
+          <th scope='col' className='border-control'>
+            Median
+          </th>
+          <th scope='col'>Gj.snitt</th>
+          <th scope='col'>Min</th>
+          <th scope='col'>Max</th>
         </tr>
       </thead>
       <tbody>{tableData}</tbody>
@@ -41,7 +62,7 @@ export default function Table(props: any) {
 
   return (
     <>
-      <h1>Tabell</h1>
+      <h1>Statistikk</h1>
       <h2>11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
       {table}
     </>

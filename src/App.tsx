@@ -1,10 +1,9 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import Table from './components/Table';
-import StatisticsTable from './components/StatisticsTable';
 import { useState } from 'react';
 import Selections from './components/Selections';
-import errorCheck from './utils';
+import { errorCheck } from './utils';
 
 function App() {
   const [validQuery, setValidQuery] = useState(false);
@@ -17,13 +16,12 @@ function App() {
     region: [{}],
   });
   const [tableData, setTableData] = useState({
+    indexes: [],
     variable: [],
     region: [],
     year: [],
     values: [],
   });
-
-  const [statistics, setStatistics] = useState(false);
 
   const handleSelect = (event: any, type: string) => {
     setSelected((prev) => ({ ...prev, [type]: event }));
@@ -71,7 +69,9 @@ function App() {
         throw new Error('Network response was not ok');
       } else if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setTableData({
+          indexes: Object.values(data.dimension.Region.category.index),
           variable: Object.values(data.dimension.ContentsCode.category.label),
           region: Object.values(data.dimension.Region.category.label),
           year: Object.values(data.dimension.Tid.category.label),
@@ -82,10 +82,6 @@ function App() {
     } catch (error) {
       console.log('error', error);
     }
-  };
-
-  const renderStatisticsTable = () => {
-    setStatistics(true);
   };
 
   return (
@@ -162,9 +158,8 @@ function App() {
       )}
       {validQuery && (
         <>
-          <Navbar changeQuery={() => setValidQuery(false)} renderStatisticsTable={renderStatisticsTable} />
+          <Navbar changeQuery={() => setValidQuery(false)} />
           <Table data={tableData} setSize={selected.year.length} />
-          {statistics && <StatisticsTable data={tableData} />}
         </>
       )}
     </>
