@@ -1,4 +1,4 @@
-import { calculateMin, calculateMax, calculateAvg, calculateMedian } from '../utils';
+import { calculateMin, calculateMax, calculateAvg, calculateMedian, separateNumbers } from '../utils';
 
 export default function Table(props: any) {
   const dataLength = props.data.year.length;
@@ -23,12 +23,12 @@ export default function Table(props: any) {
           {region}
         </th>
         {regionValues.map((value: number) => (
-          <td>{value}</td>
+          <td>{separateNumbers(value)}</td>
         ))}
         <td className='border-control'>{Math.trunc(calculateMedian(regionValues))}</td>
-        <td>{Math.trunc(calculateAvg(regionValues))}</td>
-        <td>{calculateMin(regionValues)}</td>
-        <td>{calculateMax(regionValues)}</td>
+        <td>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+        <td>{separateNumbers(calculateMin(regionValues))}</td>
+        <td>{separateNumbers(calculateMax(regionValues))}</td>
       </tr>
     );
   });

@@ -34,3 +34,7 @@ export function calculateMin(values: number[]): number {
 export function calculateMax(values: number[]) {
   return Math.max(...values);
 }
+
+export function separateNumbers(value: number) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
