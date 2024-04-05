@@ -149,7 +149,7 @@ function App() {
               </div>
               <div className='row'>
                 <div className='col-md-6 offset-3'>
-                  <button className='btn btn-primary p-3'>Hent data</button>
+                  <button className='data-btn btn btn-primary p-3'>Hent data</button>
                 </div>
               </div>
             </form>

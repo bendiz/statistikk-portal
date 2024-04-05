@@ -8,8 +8,10 @@ export function errorCheck(selectedOptions: any): [boolean, string[]] {
   }
 
   if (selectedOptions.region.length < 2) {
-    errors.push('region');
-    errorFound = true;
+    if (selectedOptions.region[0].value !== '0') {
+      errors.push('region');
+      errorFound = true;
+    }
   }
 
   if (selectedOptions.year.length < 3) {
