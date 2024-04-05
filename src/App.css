@@ -4,6 +4,12 @@
   height: 100vh;
 }
 
+.navbar .container-fluid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+
 h2 {
   font-size: 1rem !important;
 }
@@ -43,12 +49,10 @@ div.dropdown {
   margin: 0 auto;
 }
 
-.navbar .container-fluid {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0;
-}
-
 .border-control {
   border-left: 1px solid #c6c7c83c;
+}
+
+.data-btn {
+  width: 200px;
 }
