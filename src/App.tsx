@@ -117,7 +117,14 @@ function App() {
       )}
       {validQuery && (
         <div className='pb-3'>
-          <Navbar changeQuery={() => setValidQuery(false)} grafVisning={() => setGrafVisning(!grafVisning)} grafVisningOn={grafVisning} />
+          <Navbar
+            changeQuery={() => {
+              setValidQuery(false);
+              setGrafVisning(false);
+            }}
+            grafVisning={() => setGrafVisning(!grafVisning)}
+            grafVisningOn={grafVisning}
+          />
           <Table data={tableData} setSize={selected.year.length} grafVisning={grafVisning} />
         </div>
       )}
