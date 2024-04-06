@@ -1,11 +1,14 @@
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Colors } from 'chart.js';
 import { CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { LabelKey } from '../utilities/types';
+import { getRandomColor } from '../utilities/utils';
 
 Chart.register(CategoryScale);
 Chart.register(Colors);
+Chart.register(ChartDataLabels);
 
 export default function LineChart(props: any) {
   const yearToFrom = `${props.years[0]} - ${props.years[props.years.length - 1]}`;
@@ -14,8 +17,8 @@ export default function LineChart(props: any) {
       label: label,
       data: statsData.map((data) => data[label]),
       borderWidth: 2,
-      borderColor: '#CFF4FC',
       tension: 0.4,
+      maintainAspectRatio: false,
     };
   }
 
@@ -28,9 +31,10 @@ export default function LineChart(props: any) {
   }));
 
   function generateChartData(type: string, statsData: any[]) {
+    const pointBackgroundColors = statsData.map(() => getRandomColor());
     return {
       labels: statsData.map((data) => data.region),
-      datasets: [dataset(type, statsData)],
+      datasets: [{ ...dataset(type, statsData), pointBackgroundColor: pointBackgroundColors }],
     };
   }
 
@@ -48,28 +52,45 @@ export default function LineChart(props: any) {
       min: 'Minimum',
       max: 'Maksimum',
     };
-
     return labels[shortLabel];
+  }
+
+  function getRefName(shortLabel: LabelKey): any {
+    const refLabels = {
+      median: props.refs.medianRef,
+      avg: props.refs.avgRef,
+      min: props.refs.minRef,
+      max: props.refs.maxRef,
+    };
+    return refLabels[shortLabel];
   }
 
   return (
     <div className='charts'>
-      {chartData.map((data) => (
-        <div className='chart-container mb-5'>
-          <Line
-            data={data}
-            options={{
-              plugins: {
-                title: {
-                  display: props.regions.length > 50 ? false : true,
-                  text: `${getLabelName(data.datasets[0].label as LabelKey)} pr. region (${yearToFrom})`,
+      {chartData.map((data, index) => (
+        <div key={data.datasets[0].label}>
+          <h3 className='mb-1 text-center fs-6 fw-light text-muted' id={data.datasets[0].label} ref={getRefName(data.datasets[0].label as LabelKey)}>
+            <a className='text-decoration-none text-muted' onClick={() => props.scrollToRef(getRefName(data.datasets[0].label as LabelKey))}>
+              {getLabelName(data.datasets[0].label as LabelKey)} pr. region ({yearToFrom})
+            </a>
+          </h3>
+          <div className='chart-container mb-5'>
+            <Line
+              data={data}
+              options={{
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                  datalabels: {
+                    display: true,
+                    color: 'black',
+                    align: 'top',
+                  },
                 },
-                legend: {
-                  display: false,
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         </div>
       ))}
     </div>

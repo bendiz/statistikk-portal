@@ -14,7 +14,7 @@ export default function Form(props: any) {
                   Kun 1 variabel tillatt
                 </div>
               )}
-              <div className='dropdown'>
+              <div className='menu-dropdown'>
                 <Selections selected={props.selected.variabel} name='variabel' handleSelect={props.handleSelect} />
               </div>
             </div>
@@ -25,7 +25,7 @@ export default function Form(props: any) {
                   Minst 3 årstall påkrevd!
                 </div>
               )}
-              <div className='dropdown'>
+              <div className='menu-dropdown'>
                 <Selections selected={props.selected.year} name='year' handleSelect={props.handleSelect} />
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function Form(props: any) {
               {props.region.length > 0 && (
                 <div className='velg-region'>
                   <div>
-                    <div className='dropdown'>
+                    <div className='menu-dropdown'>
                       <Selections
                         selected={props.selected.region}
                         name='region'
