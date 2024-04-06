@@ -21,7 +21,12 @@ export default function Navbar(props: any) {
           <ul className='navbar-nav'>
             <li className='nav-item'>
               <a className='nav-link active' aria-current='page' onClick={props.changeQuery}>
-                Gå tilbake
+                Ny spørring
+              </a>
+            </li>
+            <li className='nav-item'>
+              <a className='nav-link active' aria-current='page' onClick={props.grafVisning}>
+                {props.grafVisningOn ? 'Tabellvisning' : 'Grafvisning'}
               </a>
             </li>
           </ul>

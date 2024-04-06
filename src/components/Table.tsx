@@ -1,4 +1,5 @@
 import { calculateMin, calculateMax, calculateAvg, calculateMedian, separateNumbers } from '../utilities/utils';
+import LineChart from './LineChart';
 
 export default function Table(props: any) {
   const dataLength = props.data.year.length;
@@ -13,25 +14,38 @@ export default function Table(props: any) {
   };
 
   const sortedRegions = reorderRegions(props.data.region, props.data.indexes);
+  const calculatedValues: Record<string, number[]> = {
+    median: [],
+    avg: [],
+    min: [],
+    max: [],
+  };
 
   const tableData = sortedRegions.map((region: string, index: number) => {
     const startIndex = index === 0 ? 0 : index * dataLength;
     const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
+    calculatedValues.median.push(Math.trunc(calculateMedian(regionValues)));
+    calculatedValues.avg.push(Math.trunc(calculateAvg(regionValues)));
+    calculatedValues.min.push(calculateMin(regionValues));
+    calculatedValues.max.push(calculateMax(regionValues));
+    console.log(sortedRegions);
     return (
-      <tr key={`${region}-${startIndex}`}>
-        <th scope='row' className='table-light inner-th'>
-          {region}
-        </th>
-        {regionValues.map((value: number, index: number) => (
-          <td key={index}>{separateNumbers(value)}</td>
-        ))}
-        <td key='median' className='border-control'>
-          {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
-        </td>
-        <td key='avg'>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
-        <td key='min'>{separateNumbers(calculateMin(regionValues))}</td>
-        <td key='max'>{separateNumbers(calculateMax(regionValues))}</td>
-      </tr>
+      <>
+        <tr key={`${region}-${startIndex}`}>
+          <th scope='row' className='table-light inner-th'>
+            {region}
+          </th>
+          {regionValues.map((value: number, index: number) => (
+            <td key={index}>{separateNumbers(value)}</td>
+          ))}
+          <td key='median' className='border-control'>
+            {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
+          </td>
+          <td key='avg'>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+          <td key='min'>{separateNumbers(calculateMin(regionValues))}</td>
+          <td key='max'>{separateNumbers(calculateMax(regionValues))}</td>
+        </tr>
+      </>
     );
   });
 
@@ -72,9 +86,19 @@ export default function Table(props: any) {
 
   return (
     <>
-      <h1>Statistikk</h1>
-      <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
-      {table}
+      {!props.grafVisning && (
+        <>
+          <h1>Tabell</h1>
+          <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2> <div>{table}</div>
+        </>
+      )}
+      {props.grafVisning && sortedRegions.length < 50 && (
+        <>
+          <h1>Grafer</h1>
+          <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
+          <LineChart regions={sortedRegions} calculations={calculatedValues} years={props.data.year} />
+        </>
+      )}
     </>
   );
 }

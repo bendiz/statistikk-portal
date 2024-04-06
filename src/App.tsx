@@ -24,6 +24,7 @@ function App() {
     year: [],
     values: [],
   });
+  const [grafVisning, setGrafVisning] = useState(false);
 
   const checkAllSelected = (selected: any, type: any) => {
     const isSelectedAll = selected.find((option: any) => option.label.includes('alle'));
@@ -103,21 +104,21 @@ function App() {
     <>
       {!validQuery && (
         <div>
-        <Form
-          selected={selected}
-          error={error}
-          getRegion={getRegion}
-          regionQuery={regionQuery}
-          region={region}
-          handleSubmit={handleSubmit}
-          handleSelect={checkAllSelected}
-        />
+          <Form
+            selected={selected}
+            error={error}
+            getRegion={getRegion}
+            regionQuery={regionQuery}
+            region={region}
+            handleSubmit={handleSubmit}
+            handleSelect={checkAllSelected}
+          />
         </div>
       )}
       {validQuery && (
         <div className='pb-3'>
-          <Navbar changeQuery={() => setValidQuery(false)} />
-          <Table data={tableData} setSize={selected.year.length} />
+          <Navbar changeQuery={() => setValidQuery(false)} grafVisning={() => setGrafVisning(!grafVisning)} grafVisningOn={grafVisning} />
+          <Table data={tableData} setSize={selected.year.length} grafVisning={grafVisning} />
         </div>
       )}
     </>
