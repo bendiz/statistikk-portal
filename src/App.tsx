@@ -1,5 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar';
+import Form from './components/Form';
 import Table from './components/Table';
 import { useState } from 'react';
 import Selections from './components/Selections';
@@ -69,7 +70,6 @@ function App() {
         throw new Error('Network response was not ok');
       } else if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setTableData({
           indexes: Object.values(data.dimension.Region.category.index),
           variable: Object.values(data.dimension.ContentsCode.category.label),
@@ -80,81 +80,22 @@ function App() {
         setValidQuery(true);
       }
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Something went wrong. Please try again later!');
     }
   };
 
   return (
     <>
       {!validQuery && (
-        <>
-          <h1 className='pt-5 pb-3'>Statistikk Portal</h1>
-          <div className='container text-center'>
-            <form onSubmit={handleSubmit}>
-              <div className='row row-cols-3'>
-                <div className='col statistikk-col'>
-                  <h2 className={error.includes('variabel') ? 'red' : ''}>Statistikk (Påkrevd*)</h2>
-                  {error.includes('variabel') && (
-                    <div className='alert alert-danger p-1 my-2' role='alert'>
-                      Kun 1 variabel tillatt
-                    </div>
-                  )}
-                  <div className='dropdown'>
-                    <Selections selected={selected.variabel} name='variabel' handleSelect={handleSelect} />
-                  </div>
-                </div>
-                <div className='col' id='year-col'>
-                  <h2 className={error.includes('year') ? 'red' : ''}>Årstall (Påkrevd*)</h2>
-                  {error.includes('year') && (
-                    <div className='alert alert-danger p-1 my-2' role='alert'>
-                      Minst 3 årstall påkrevd!
-                    </div>
-                  )}
-                  <div className='dropdown'>
-                    <Selections selected={selected.year} name='year' handleSelect={handleSelect} />
-                  </div>
-                </div>
-                <div className='col region-col'>
-                  <h2 className={error.includes('region') ? 'red' : ''}>Region (Påkrevd*)</h2>
-                  {error.includes('region') && (
-                    <div className='alert alert-danger p-1 my-2' role='alert'>
-                      Minst 2 regioner påkrevd!
-                    </div>
-                  )}
-                  <select id='region' className=' mb-2 form-select' aria-label='Velg Inndeling (Fylke eller Kommune)' onChange={getRegion}>
-                    <option className='text-center' value='0'>
-                      -- Velg inndeling --
-                    </option>
-                    <option value='alle'>Hele Landet</option>
-                    <option value='fylker'>Fylker</option>
-                    <option value='kommuner'>Kommuner</option>
-                  </select>
-                  {region.length > 0 && (
-                    <div className='velg-region'>
-                      <div>
-                        <div className='dropdown'>
-                          <Selections
-                            selected={selected.region}
-                            name='region'
-                            handleSelect={handleSelect}
-                            region={region}
-                            regionQuery={regionQuery}
-                          />
-                        </div>
-                        {regionQuery && <span>{region.length} resultater</span>}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className='row'>
-                <div className='col-md-6 offset-3'>
-                  <button className='data-btn btn btn-primary p-3'>Hent data</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </>
+        <Form
+          selected={selected}
+          error={error}
+          getRegion={getRegion}
+          regionQuery={regionQuery}
+          region={region}
+          handleSubmit={handleSubmit}
+          handleSelect={handleSelect}
+        />
       )}
       {validQuery && (
         <>
