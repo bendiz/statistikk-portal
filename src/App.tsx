@@ -1,23 +1,25 @@
 import './App.css';
-import { useState } from 'react';
-import Navbar from './components/Navbar';
+import { useState, useRef } from 'react';
+import NavigationBar from './components/Navbar';
 import Form from './components/Form';
 import Table from './components/Table';
-import { errorCheck } from './utilities/utils';
-import { RegionType } from './utilities/types';
+import { errorCheck, scrollToRef, processData } from './utilities/utils';
+import { RegionType, TableDataType } from './utilities/types';
 import { yearOptions } from './components/Selections';
+import Alert from 'react-bootstrap/Alert';
 
 function App() {
   const [validQuery, setValidQuery] = useState(false);
   const [regionQuery, setRegionQuery] = useState('');
   const [region, setRegion] = useState<RegionType[]>([]);
   const [error, setError] = useState<string[]>([]);
+  const [showGraphAlert, setShowGraphAlert] = useState(false);
   const [selected, setSelected] = useState({
     variabel: [{}],
     year: [{}],
     region: [{}],
   });
-  const [tableData, setTableData] = useState({
+  const [tableData, setTableData] = useState<TableDataType>({
     indexes: [],
     variable: [],
     region: [],
@@ -25,10 +27,24 @@ function App() {
     values: [],
   });
   const [grafVisning, setGrafVisning] = useState(false);
+  const [isFirstClick, setIsFirstClick] = useState(true);
+  const refs = {
+    medianRef: useRef(null),
+    avgRef: useRef(null),
+    minRef: useRef(null),
+    maxRef: useRef(null),
+    scrollToRef: scrollToRef,
+  };
+
+  function handleFirstClick() {
+    if (isFirstClick && tableData.region.length <= 50) {
+      setGrafVisning(true);
+      setIsFirstClick(true);
+    }
+  }
 
   const checkAllSelected = (selected: any, type: any) => {
     const isSelectedAll = selected.find((option: any) => option.label.includes('alle'));
-
     if (isSelectedAll) {
       let allOptionsSelected: any[] = [];
       if (type === 'region') {
@@ -85,13 +101,8 @@ function App() {
         throw new Error('Network response was not ok');
       } else if (response.ok) {
         const data = await response.json();
-        setTableData({
-          indexes: Object.values(data.dimension.Region.category.index),
-          variable: Object.values(data.dimension.ContentsCode.category.label),
-          region: Object.values(data.dimension.Region.category.label),
-          year: Object.values(data.dimension.Tid.category.label),
-          values: data.value,
-        });
+        const processedData = processData(data);
+        setTableData(processedData);
         setValidQuery(true);
       }
     } catch (error) {
@@ -102,6 +113,12 @@ function App() {
 
   return (
     <>
+      {showGraphAlert && (
+        <Alert variant='danger' onClose={() => setShowGraphAlert(false)} dismissible className='mb-0'>
+          <Alert.Heading>Grafvisning ikke tillatt!</Alert.Heading>
+          Maks 50 regioner
+        </Alert>
+      )}
       {!validQuery && (
         <div>
           <Form
@@ -117,15 +134,26 @@ function App() {
       )}
       {validQuery && (
         <div className='pb-3'>
-          <Navbar
+          <NavigationBar
             changeQuery={() => {
               setValidQuery(false);
               setGrafVisning(false);
+              setShowGraphAlert(false);
             }}
-            grafVisning={() => setGrafVisning(!grafVisning)}
+            grafVisning={
+              tableData.region.length <= 50
+                ? () => setGrafVisning(!grafVisning)
+                : () => {
+                    setGrafVisning(false);
+                    setShowGraphAlert(true);
+                  }
+            }
             grafVisningOn={grafVisning}
+            scrollToRef={scrollToRef}
+            refs={refs}
+            handleFirstClick={handleFirstClick}
           />
-          <Table data={tableData} setSize={selected.year.length} grafVisning={grafVisning} />
+          <Table data={tableData} setSize={selected.year.length} grafVisning={grafVisning} refs={refs} />
         </div>
       )}
     </>

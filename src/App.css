@@ -4,17 +4,11 @@
   min-height: 100vh;
 }
 
-.navbar .container-fluid {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0;
-}
-
 h2 {
   font-size: 1rem !important;
 }
 
-div.dropdown {
+.menu-dropdown {
   height: 320px;
 }
 
@@ -60,7 +54,15 @@ th:nth-of-type(2) {
   margin: 0 auto;
 }
 
-.chart-container canvas {
-  width: 100 !important;
-  height: 50 !important;
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 65vh;
+  width: 80vw;
+}
+
+@media (max-width: 1200px) {
+  .chart-container {
+    height: 40vw;
+  }
 }
