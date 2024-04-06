@@ -28,24 +28,21 @@ export default function Table(props: any) {
     calculatedValues.avg.push(Math.trunc(calculateAvg(regionValues)));
     calculatedValues.min.push(calculateMin(regionValues));
     calculatedValues.max.push(calculateMax(regionValues));
-    console.log(sortedRegions);
     return (
-      <>
-        <tr key={`${region}-${startIndex}`}>
-          <th scope='row' className='table-light inner-th'>
-            {region}
-          </th>
-          {regionValues.map((value: number, index: number) => (
-            <td key={index}>{separateNumbers(value)}</td>
-          ))}
-          <td key='median' className='border-control'>
-            {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
-          </td>
-          <td key='avg'>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
-          <td key='min'>{separateNumbers(calculateMin(regionValues))}</td>
-          <td key='max'>{separateNumbers(calculateMax(regionValues))}</td>
-        </tr>
-      </>
+      <tr key={`tr-${region}-${startIndex}`}>
+        <th scope='row' className='table-light inner-th'>
+          {region}
+        </th>
+        {regionValues.map((value: number, index: number) => (
+          <td key={`td-${region}-${index}`}>{separateNumbers(value)}</td>
+        ))}
+        <td key={`median-${region}-${startIndex}`} className='border-control'>
+          {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
+        </td>
+        <td key={`avg-${region}-${startIndex}`}>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+        <td key={`min-${region}-${startIndex}`}>{separateNumbers(calculateMin(regionValues))}</td>
+        <td key={`max-${region}-${startIndex}`}>{separateNumbers(calculateMax(regionValues))}</td>
+      </tr>
     );
   });
 
@@ -88,15 +85,15 @@ export default function Table(props: any) {
     <>
       {!props.grafVisning && (
         <>
-          <h1>Tabell</h1>
-          <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2> <div>{table}</div>
+          <h2 className='fs-2 mt-5 pt-3'>Tabell</h2>
+          <h3 className='fs-6 fw-light text-muted pb-2'>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h3>{' '}
+          <div>{table}</div>
         </>
       )}
-      {props.grafVisning && sortedRegions.length < 50 && (
+      {props.grafVisning && sortedRegions.length <= 50 && (
         <>
-          <h1>Grafer</h1>
-          <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
-          <LineChart regions={sortedRegions} calculations={calculatedValues} years={props.data.year} />
+          <h2 className='fs-2 mt-5 pt-3'>Grafer</h2>
+          <LineChart regions={sortedRegions} calculations={calculatedValues} years={props.data.year} refs={props.refs} />
         </>
       )}
     </>
