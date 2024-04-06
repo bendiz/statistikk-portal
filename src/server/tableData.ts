@@ -6,7 +6,7 @@ export const createTableQuery = (selectedOptions: any) => {
         code: 'Region',
         selection: {
           filter: '',
-          values: selectedOptions.region.map((region: any) => {
+          values: selectedOptions.region.flatMap((region: any) => {
             return region.value;
           }),
         },

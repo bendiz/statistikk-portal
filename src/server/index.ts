@@ -1,6 +1,6 @@
 import express from 'express';
 import { tableUrl, createTableQuery } from './tableData';
-import { Region } from '../types';
+import { Region } from '../utilities/types';
 
 const app = express();
 const port = 3000;
@@ -21,7 +21,6 @@ app.post('/api/submit', async (req, res) => {
     });
 
     const externalData = await externalResponse.json();
-    console.log(externalData);
     res.json(externalData);
   } catch (error) {
     console.log(error);

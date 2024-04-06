@@ -1,15 +1,16 @@
 import './App.css';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Form from './components/Form';
 import Table from './components/Table';
-import { useState } from 'react';
-import Selections from './components/Selections';
-import { errorCheck } from './utils';
+import { errorCheck } from './utilities/utils';
+import { RegionType } from './utilities/types';
+import { yearOptions } from './components/Selections';
 
 function App() {
   const [validQuery, setValidQuery] = useState(false);
   const [regionQuery, setRegionQuery] = useState('');
-  const [region, setRegion] = useState([]);
+  const [region, setRegion] = useState<RegionType[]>([]);
   const [error, setError] = useState<string[]>([]);
   const [selected, setSelected] = useState({
     variabel: [{}],
@@ -23,6 +24,22 @@ function App() {
     year: [],
     values: [],
   });
+
+  const checkAllSelected = (selected: any, type: any) => {
+    const isSelectedAll = selected.find((option: any) => option.label.includes('alle'));
+
+    if (isSelectedAll) {
+      let allOptionsSelected: any[] = [];
+      if (type === 'region') {
+        allOptionsSelected = region.map((e) => ({ value: e.kode, label: e.navn }));
+      } else if (type === 'year') {
+        allOptionsSelected = yearOptions.map((e) => ({ value: e.value, label: e.label }));
+      }
+      handleSelect(allOptionsSelected, type);
+    } else {
+      handleSelect(selected, type);
+    }
+  };
 
   const handleSelect = (event: any, type: string) => {
     setSelected((prev) => ({ ...prev, [type]: event }));
@@ -44,11 +61,8 @@ function App() {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-
     setValidQuery(false);
-
     const selectedOptions = selected;
-
     const errors = errorCheck(selectedOptions);
 
     if (errors[0]) {
@@ -80,6 +94,7 @@ function App() {
         setValidQuery(true);
       }
     } catch (error) {
+      console.log(error);
       throw new Error('Something went wrong. Please try again later!');
     }
   };
@@ -87,6 +102,7 @@ function App() {
   return (
     <>
       {!validQuery && (
+        <div>
         <Form
           selected={selected}
           error={error}
@@ -94,14 +110,15 @@ function App() {
           regionQuery={regionQuery}
           region={region}
           handleSubmit={handleSubmit}
-          handleSelect={handleSelect}
+          handleSelect={checkAllSelected}
         />
+        </div>
       )}
       {validQuery && (
-        <>
+        <div className='pb-3'>
           <Navbar changeQuery={() => setValidQuery(false)} />
           <Table data={tableData} setSize={selected.year.length} />
-        </>
+        </div>
       )}
     </>
   );

@@ -1,4 +1,4 @@
-import { calculateMin, calculateMax, calculateAvg, calculateMedian, separateNumbers } from '../utils';
+import { calculateMin, calculateMax, calculateAvg, calculateMedian, separateNumbers } from '../utilities/utils';
 
 export default function Table(props: any) {
   const dataLength = props.data.year.length;
@@ -18,17 +18,19 @@ export default function Table(props: any) {
     const startIndex = index === 0 ? 0 : index * dataLength;
     const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
     return (
-      <tr>
-        <th scope='row' className='table-light'>
+      <tr key={`${region}-${startIndex}`}>
+        <th scope='row' className='table-light inner-th'>
           {region}
         </th>
-        {regionValues.map((value: number) => (
-          <td>{separateNumbers(value)}</td>
+        {regionValues.map((value: number, index: number) => (
+          <td key={index}>{separateNumbers(value)}</td>
         ))}
-        <td className='border-control'>{Math.trunc(calculateMedian(regionValues))}</td>
-        <td>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
-        <td>{separateNumbers(calculateMin(regionValues))}</td>
-        <td>{separateNumbers(calculateMax(regionValues))}</td>
+        <td key='median' className='border-control'>
+          {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
+        </td>
+        <td key='avg'>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+        <td key='min'>{separateNumbers(calculateMin(regionValues))}</td>
+        <td key='max'>{separateNumbers(calculateMax(regionValues))}</td>
       </tr>
     );
   });
@@ -37,23 +39,31 @@ export default function Table(props: any) {
     <table className='table'>
       <thead>
         <tr>
-          <th colSpan={1} rowSpan={2} className='table-info'>
+          <th key='region' colSpan={1} rowSpan={2} className='table-info'>
             Region
           </th>
-          <th scope='col' colSpan={dataLength + 4} className='table-info'>
+          <th key='variable' scope='col' colSpan={dataLength + 4} className='table-info'>
             {props.data.variable}
           </th>
         </tr>
         <tr className='table-light'>
           {props.data.year.map((year: any) => (
-            <th scope='col'>{year}</th>
+            <th key={year} scope='col' className='inner-th'>
+              {year}
+            </th>
           ))}
-          <th scope='col' className='border-control'>
+          <th scope='col' className='border-control inner-th'>
             Median
           </th>
-          <th scope='col'>Gj.snitt</th>
-          <th scope='col'>Min</th>
-          <th scope='col'>Max</th>
+          <th scope='col' className='inner-th'>
+            Gj.snitt
+          </th>
+          <th scope='col' className='inner-th'>
+            Min
+          </th>
+          <th scope='col' className='inner-th'>
+            Max
+          </th>
         </tr>
       </thead>
       <tbody>{tableData}</tbody>
@@ -63,7 +73,7 @@ export default function Table(props: any) {
   return (
     <>
       <h1>Statistikk</h1>
-      <h2>11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
+      <h2>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h2>
       {table}
     </>
   );

@@ -1,7 +1,7 @@
 #root {
   margin: 0 auto;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .navbar .container-fluid {
@@ -14,32 +14,16 @@ h2 {
   font-size: 1rem !important;
 }
 
-.filter-buttons > .filter-btn {
-  font-size: 1rem;
-  border-radius: 0;
-  width: 100%;
-}
-
-label.btn:hover {
-  background-color: rgba(181, 181, 181, 0.122) !important;
-}
-
-#root > div > form > div.row.row-cols-3 > div.col.region-col > div > div > div.css-b62m3t-container > div.css-1nmdiq5-menu {
-  position: absolute;
-}
-
 div.dropdown {
   height: 320px;
 }
 
-#year-col > div.dropdown > div > div.css-13cymwt-control {
-  overflow: hidden;
-}
-
+/* Selected option */
 .css-tr4s17-option {
   background-color: #0d6efd !important;
 }
 
+/* Search icon inside search bar */
 .css-4xgw5l-IndicatorsContainer2 > div > svg {
   fill: hsl(0, 0%, 80%);
 }
@@ -55,4 +39,16 @@ div.dropdown {
 
 .data-btn {
   width: 200px;
+}
+
+th:nth-of-type(1) {
+  border-top-left-radius: 5px;
+}
+
+th:nth-of-type(2) {
+  border-top-right-radius: 5px;
+}
+
+.inner-th {
+  background-color: #cff4fc58 !important;
 }

@@ -2,11 +2,6 @@ export function errorCheck(selectedOptions: any): [boolean, string[]] {
   let errors = [''];
   let errorFound = false;
 
-  if (selectedOptions.variabel.length > 1) {
-    errors.push('variabel');
-    errorFound = true;
-  }
-
   if (selectedOptions.region.length < 2) {
     if (selectedOptions.region[0].value !== '0') {
       errors.push('region');
