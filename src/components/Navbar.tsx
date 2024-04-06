@@ -8,7 +8,9 @@ export default function NavigationBar(props: any) {
     <Navbar className='fixed-top' expand='lg' bg='light' variant='light'>
       <Container>
         <Navbar.Brand>
-          <BiMath />
+          <span className='d-flex'>
+            <BiMath />
+          </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>

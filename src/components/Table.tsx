@@ -87,7 +87,7 @@ export default function Table(props: any) {
         <>
           <h2 className='fs-2 mt-5 pt-3'>Tabell</h2>
           <h3 className='fs-6 fw-light text-muted pb-2'>Tabell 11342: Areal og befolkning, etter region, statistikkvariabel og år</h3>{' '}
-          <div>{table}</div>
+          <div className='px-3'>{table}</div>
         </>
       )}
       {props.grafVisning && sortedRegions.length <= 50 && (
