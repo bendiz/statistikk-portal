@@ -10,7 +10,7 @@ import Alert from 'react-bootstrap/Alert';
 
 function App() {
   const [validQuery, setValidQuery] = useState(false);
-  const [regionQuery, setRegionQuery] = useState('');
+  const [regionQuery, setRegionQuery] = useState(['', '']);
   const [region, setRegion] = useState<RegionType[]>([]);
   const [error, setError] = useState<string[]>([]);
   const [showGraphAlert, setShowGraphAlert] = useState(false);
@@ -64,15 +64,16 @@ function App() {
 
   const getRegion = async (event: any) => {
     setRegion([]);
-    setRegionQuery('');
+    setRegionQuery([]);
     if (event.target.value === '0') {
       return;
     } else {
-      const query = event.target.value;
-      const response = await fetch(`http://localhost:5173/api/${query}`);
+      const queryValue: string = event.target.value;
+      const queryName: string = event.target.selectedOptions[0].text;
+      const response = await fetch(`http://localhost:5173/api/${queryValue}`);
       const data = await response.json();
       setRegion(data);
-      setRegionQuery(query);
+      setRegionQuery([queryValue, queryName]);
     }
   };
 

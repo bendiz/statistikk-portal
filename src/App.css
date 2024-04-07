@@ -61,6 +61,10 @@ th:nth-of-type(2) {
   width: 80vw;
 }
 
+a.dropdown-item:hover {
+  background-color: #deebff;
+}
+
 @media (max-width: 1200px) {
   .chart-container {
     height: 40vw;

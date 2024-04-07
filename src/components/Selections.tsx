@@ -18,7 +18,9 @@ const yearOptionsWithSelectAll = [selectAllYears, ...yearOptions];
 
 function Selections(props: any) {
   const regionOptions = (region: any) => {
-    const selectAllOption = { value: region.map((option: any) => option.kode), label: `Velg alle ${props.regionQuery}` };
+    if (props.regionQuery[0] === 'alle')
+      return [{ value: 'alle', label: 'Velg alle kommuner/fylker' }, ...region.map((e: any) => ({ value: e.kode, label: e.navn }))];
+    const selectAllOption = { value: region.map((option: any) => option.kode), label: `Velg alle ${props.regionQuery[0]}` };
     return [selectAllOption, ...region.map((e: any) => ({ value: e.kode, label: e.navn }))];
   };
 
@@ -31,7 +33,7 @@ function Selections(props: any) {
       ? 'Søk etter år'
       : props.name === 'alle'
       ? 'Søk i alle kommuner/fylker'
-      : `Søk etter ${props.regionQuery || 'region'}`;
+      : `Søk i ${props.regionQuery[0] || 'region'}`;
 
   return (
     <Select

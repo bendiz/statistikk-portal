@@ -37,9 +37,11 @@ export default function Form(props: any) {
                 </div>
               )}
               <select id='region' className=' mb-2 form-select' aria-label='Velg Inndeling (Fylke eller Kommune)' onChange={props.getRegion}>
-                <option className='text-center' value='0'>
-                  -- Velg inndeling --
-                </option>
+                {!props.regionQuery[1] && (
+                  <option className={'text-center text-muted'} value='0'>
+                    -- Velg inndeling (Fylke eller Kommune) --
+                  </option>
+                )}
                 <option value='alle'>Hele Landet</option>
                 <option value='fylker'>Fylker</option>
                 <option value='kommuner'>Kommuner</option>
