@@ -93,7 +93,13 @@ export default function Table(props: any) {
       {props.grafVisning && sortedRegions.length <= 50 && (
         <>
           <h2 className='fs-2 mt-5 pt-5'>Grafer</h2>
-          <LineChart regions={sortedRegions} calculations={calculatedValues} years={props.data.year} refs={props.refs} />
+          <LineChart
+            regions={sortedRegions}
+            variable={props.data.variable}
+            calculations={calculatedValues}
+            years={props.data.year}
+            refs={props.refs}
+          />
         </>
       )}
     </>

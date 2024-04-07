@@ -1,4 +1,5 @@
 import Selections from './Selections';
+import Alert from 'react-bootstrap/Alert';
 
 export default function Form(props: any) {
   return (
@@ -58,7 +59,7 @@ export default function Form(props: any) {
                         regionQuery={props.regionQuery}
                       />
                     </div>
-                    {props.regionQuery && <span>{props.region.length} resultater</span>}
+                    {props.regionQuery && <span className='badge bg-grey fw-bold'>{props.region.length} resultater</span>}
                   </div>
                 </div>
               )}
@@ -66,7 +67,7 @@ export default function Form(props: any) {
           </div>
           <div className='row'>
             <div className='col-md-6 offset-3'>
-              <button className='data-btn btn btn-primary p-3'>Hent data</button>
+              <button className='data-btn btn btn-success p-3'>Hent data</button>
             </div>
           </div>
         </form>

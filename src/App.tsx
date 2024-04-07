@@ -115,7 +115,7 @@ function App() {
   return (
     <>
       {showGraphAlert && (
-        <Alert variant='danger' onClose={() => setShowGraphAlert(false)} dismissible className='mb-0'>
+        <Alert variant='danger' onClose={() => setShowGraphAlert(false)} dismissible className='mt-3 mb-0 z-3'>
           <Alert.Heading>Grafvisning ikke tillatt!</Alert.Heading>
           Maks 50 regioner
         </Alert>
@@ -136,11 +136,6 @@ function App() {
       {validQuery && (
         <div className='pb-3'>
           <NavigationBar
-            changeQuery={() => {
-              setValidQuery(false);
-              setGrafVisning(false);
-              setShowGraphAlert(false);
-            }}
             grafVisning={
               tableData.region.length <= 50
                 ? () => setGrafVisning(!grafVisning)

@@ -1,22 +1,24 @@
 import { BiMath } from 'react-icons/bi';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { scrollToTop } from '../utilities/utils';
-import { useEffect, useState } from 'react';
 
 export default function NavigationBar(props: any) {
   return (
-    <Navbar className='fixed-top' expand='lg' bg='light' variant='light'>
+    <Navbar className='fixed-top z-1' expand='lg' bg='light' variant='light'>
       <Container>
         <Navbar.Brand>
-          <span className='d-flex'>
+          <a href={window.location.pathname} className='text-black d-flex' title='Gå Tilbake'>
             <BiMath />
-          </span>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
-            <Nav.Link onClick={props.changeQuery}>Ny spørring</Nav.Link>
+            <Nav.Link href={window.location.pathname} title='Hent ny tabell'>
+              Ny spørring
+            </Nav.Link>
             <Nav.Link
+              title={props.grafVisningOn ? 'Vis tabell' : 'Vis statistikkgrafer'}
               onClick={() => {
                 props.grafVisning();
                 scrollToTop();
@@ -24,10 +26,18 @@ export default function NavigationBar(props: any) {
               {props.grafVisningOn ? 'Tabellvisning' : 'Grafvisning'}
             </Nav.Link>
             <NavDropdown title='Statistikkgrafer' id='basic-nav-dropdown' onClick={props.handleFirstClick}>
-              <NavDropdown.Item onClick={() => props.refs.scrollToRef(props.refs.medianRef)}>Median</NavDropdown.Item>
-              <NavDropdown.Item onClick={() => props.refs.scrollToRef(props.refs.avgRef)}>Gjennomsnitt</NavDropdown.Item>
-              <NavDropdown.Item onClick={() => props.refs.scrollToRef(props.refs.minRef)}>Minimum</NavDropdown.Item>
-              <NavDropdown.Item onClick={() => props.refs.scrollToRef(props.refs.maxRef)}>Maksimum</NavDropdown.Item>
+              <NavDropdown.Item title='Gå til mediangraf' onClick={() => props.refs.scrollToRef(props.refs.medianRef)}>
+                Median
+              </NavDropdown.Item>
+              <NavDropdown.Item title='Gå til gjennomsnittsgraf' onClick={() => props.refs.scrollToRef(props.refs.avgRef)}>
+                Gjennomsnitt
+              </NavDropdown.Item>
+              <NavDropdown.Item title='Gå til minimumgraf' onClick={() => props.refs.scrollToRef(props.refs.minRef)}>
+                Minimum
+              </NavDropdown.Item>
+              <NavDropdown.Item title='Gå til maksimumgraf' onClick={() => props.refs.scrollToRef(props.refs.maxRef)}>
+                Maksimum
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

@@ -42,7 +42,6 @@ function Selections(props: any) {
       onChange={(e) => props.handleSelect(e, props.name)}
       isMulti
       menuIsOpen
-      maxMenuHeight={250}
       placeholder={placeholderText}
       hideSelectedOptions={false}
       components={{ DropdownIndicator }}
@@ -50,6 +49,12 @@ function Selections(props: any) {
         valueContainer: (baseStyles) => ({
           ...baseStyles,
           maxHeight: '3rem',
+          overflow: 'auto',
+        }),
+        menuList: (baseStyles) => ({
+          ...baseStyles,
+          minHeight: '200px',
+          maxHeight: '200px',
           overflow: 'auto',
         }),
       }}

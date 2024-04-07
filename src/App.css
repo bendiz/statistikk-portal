@@ -9,7 +9,7 @@ h2 {
 }
 
 .menu-dropdown {
-  height: 320px;
+  height: 270px;
 }
 
 /* Selected option */
@@ -18,12 +18,22 @@ h2 {
 }
 
 /* Search icon inside search bar */
-.css-4xgw5l-IndicatorsContainer2 > div > svg {
+.css-1xc3v61-indicatorContainer {
   fill: hsl(0, 0%, 80%);
 }
 
+.css-12a83d4-MultiValueRemove,
+.css-tj5bde-Svg {
+  color: rgba(255, 30, 30, 0.342);
+}
+
+.bg-grey {
+  background-color: #e6e5e5;
+  color: #333333 !important;
+}
+
 .table {
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
 }
 
