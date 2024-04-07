@@ -85,3 +85,6 @@ table {
     height: 40vw;
   }
 }
+.toggle-empty-values-btn {
+  cursor: pointer;
+}

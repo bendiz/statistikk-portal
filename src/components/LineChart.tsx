@@ -6,14 +6,14 @@ import { Line } from 'react-chartjs-2';
 import { LabelKey } from '../utilities/types';
 import { getRandomColor } from '../utilities/utils';
 import { useState } from 'react';
+import { FaRegArrowAltCircleUp, FaRegArrowAltCircleDown } from 'react-icons/fa';
+import Badge from 'react-bootstrap/Badge';
 
 Chart.register(CategoryScale);
 Chart.register(Colors);
 Chart.register(ChartDataLabels);
 
 export default function LineChart(props: any) {
-  const [hideEmptyValues, setHideEmptyValues] = useState(false);
-
   const yearToFrom = `${props.years[0]} - ${props.years[props.years.length - 1]}`;
   function dataset(label: string, statsData: any[]) {
     return {
@@ -68,7 +68,7 @@ export default function LineChart(props: any) {
     return refLabels[shortLabel];
   }
 
-  if (hideEmptyValues) {
+  if (props.hideEmpty) {
     chartData.forEach((chart) => {
       const filteredData: number[] = [];
       const filteredLabels: string[] = [];
@@ -87,9 +87,15 @@ export default function LineChart(props: any) {
 
   return (
     <div className='charts'>
-      <button className='btn btn-primary' onClick={() => setHideEmptyValues(!hideEmptyValues)}>
-        {hideEmptyValues ? 'Vis tomme verdier' : 'Skjul tomme verdier'}
-      </button>
+      {/* <Badge
+        className='toggle-empty-values-btn mx-2 p-2'
+        pill
+        bg='primary'
+        onClick={() => setHideEmptyValues(!hideEmptyValues)}
+        title={hideEmptyValues ? 'Vis tomme verdier' : 'Skjul tomme verdier'}>
+        {hideEmptyValues ? <FaRegArrowAltCircleUp /> : <FaRegArrowAltCircleDown />}
+        &nbsp; Sorter {!hideEmptyValues ? 'sykende' : 'stigende'}
+      </Badge> */}
       {chartData.map((data, index) => (
         <div key={data.datasets[0].label}>
           <h3 className='mt-3 mb-1 text-center fs-6 fw-light text-muted'>{props.variable}</h3>
