@@ -24,29 +24,47 @@ export default function Table(props: any) {
     max: [],
   };
 
-  const tableData = sortedRegions.map((region: string, index: number) => {
-    const startIndex = index === 0 ? 0 : index * dataLength;
-    const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
-    const hasEmptyCell = Object.values(regionValues).every((value) => value === 0);
+  function addCalculatedValues(regionValues: number[]): void {
     calculatedValues.median.push(Math.trunc(calculateMedian(regionValues)));
     calculatedValues.avg.push(Math.trunc(calculateAvg(regionValues)));
     calculatedValues.min.push(calculateMin(regionValues));
     calculatedValues.max.push(calculateMax(regionValues));
+  }
+
+  const sortedWithSortedData = sortedRegions.map((region: string, index: number) => {
+    const startIndex = index === 0 ? 0 : index * dataLength;
+    const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
+    addCalculatedValues(regionValues);
+    return { region, regionValues };
+  });
+
+  sortedWithSortedData.sort((a, b) => {
+    if (a.region < b.region) {
+      return -1;
+    }
+    if (a.region > b.region) {
+      return 1;
+    }
+    return 0;
+  });
+
+  const tableData = sortedWithSortedData.map(({ region, regionValues }, index) => {
+    const hasEmptyCell = Object.values(regionValues).every((value) => value === 0);
     return (
       (hideEmptyCells ? !hasEmptyCell : true) && (
-        <tr key={`tr-${region}-${startIndex}`}>
+        <tr key={`tr-${region}-${index}`}>
           <th scope='row' className='table-light inner-th'>
             {region}
           </th>
           {regionValues.map((value: number, index: number) => (
             <td key={`td-${region}-${index}`}>{separateNumbers(value)}</td>
           ))}
-          <td key={`median-${region}-${startIndex}`} className='border-control'>
+          <td key={`median-${region}-${index}`} className='border-control'>
             {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
           </td>
-          <td key={`avg-${region}-${startIndex}`}>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
-          <td key={`min-${region}-${startIndex}`}>{separateNumbers(calculateMin(regionValues))}</td>
-          <td key={`max-${region}-${startIndex}`}>{separateNumbers(calculateMax(regionValues))}</td>
+          <td key={`avg-${region}-${index}`}>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+          <td key={`min-${region}-${index}`}>{separateNumbers(calculateMin(regionValues))}</td>
+          <td key={`max-${region}-${index}`}>{separateNumbers(calculateMax(regionValues))}</td>
         </tr>
       )
     );
