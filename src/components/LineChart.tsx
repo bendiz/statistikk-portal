@@ -5,12 +5,15 @@ import { CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { LabelKey } from '../utilities/types';
 import { getRandomColor } from '../utilities/utils';
+import { useState } from 'react';
 
 Chart.register(CategoryScale);
 Chart.register(Colors);
 Chart.register(ChartDataLabels);
 
 export default function LineChart(props: any) {
+  const [hideEmptyValues, setHideEmptyValues] = useState(false);
+
   const yearToFrom = `${props.years[0]} - ${props.years[props.years.length - 1]}`;
   function dataset(label: string, statsData: any[]) {
     return {
@@ -65,8 +68,28 @@ export default function LineChart(props: any) {
     return refLabels[shortLabel];
   }
 
+  if (hideEmptyValues) {
+    chartData.forEach((chart) => {
+      const filteredData: number[] = [];
+      const filteredLabels: string[] = [];
+
+      chart.datasets[0].data.forEach((value, index) => {
+        if (value !== 0) {
+          filteredData.push(value);
+          filteredLabels.push(chart.labels[index]);
+        }
+      });
+
+      chart.datasets[0].data = filteredData;
+      chart.labels = filteredLabels;
+    });
+  }
+
   return (
     <div className='charts'>
+      <button className='btn btn-primary' onClick={() => setHideEmptyValues(!hideEmptyValues)}>
+        {hideEmptyValues ? 'Vis tomme verdier' : 'Skjul tomme verdier'}
+      </button>
       {chartData.map((data, index) => (
         <div key={data.datasets[0].label}>
           <h3 className='mt-3 mb-1 text-center fs-6 fw-light text-muted'>{props.variable}</h3>
