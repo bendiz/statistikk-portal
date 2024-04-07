@@ -1,5 +1,6 @@
 import { calculateMin, calculateMax, calculateAvg, calculateMedian, separateNumbers } from '../utilities/utils';
 import LineChart from './LineChart';
+import { useState } from 'react';
 
 export default function Table(props: any) {
   const dataLength = props.data.year.length;
@@ -13,6 +14,8 @@ export default function Table(props: any) {
     return tempArray;
   };
 
+  const [hideEmptyCells, setHideEmptyCells] = useState(false);
+
   const sortedRegions = reorderRegions(props.data.region, props.data.indexes);
   const calculatedValues: Record<string, number[]> = {
     median: [],
@@ -24,25 +27,28 @@ export default function Table(props: any) {
   const tableData = sortedRegions.map((region: string, index: number) => {
     const startIndex = index === 0 ? 0 : index * dataLength;
     const regionValues = props.data.values.slice(startIndex, startIndex + dataLength);
+    const hasEmptyCell = Object.values(regionValues).every((value) => value === 0);
     calculatedValues.median.push(Math.trunc(calculateMedian(regionValues)));
     calculatedValues.avg.push(Math.trunc(calculateAvg(regionValues)));
     calculatedValues.min.push(calculateMin(regionValues));
     calculatedValues.max.push(calculateMax(regionValues));
     return (
-      <tr key={`tr-${region}-${startIndex}`}>
-        <th scope='row' className='table-light inner-th'>
-          {region}
-        </th>
-        {regionValues.map((value: number, index: number) => (
-          <td key={`td-${region}-${index}`}>{separateNumbers(value)}</td>
-        ))}
-        <td key={`median-${region}-${startIndex}`} className='border-control'>
-          {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
-        </td>
-        <td key={`avg-${region}-${startIndex}`}>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
-        <td key={`min-${region}-${startIndex}`}>{separateNumbers(calculateMin(regionValues))}</td>
-        <td key={`max-${region}-${startIndex}`}>{separateNumbers(calculateMax(regionValues))}</td>
-      </tr>
+      (hideEmptyCells ? !hasEmptyCell : true) && (
+        <tr key={`tr-${region}-${startIndex}`}>
+          <th scope='row' className='table-light inner-th'>
+            {region}
+          </th>
+          {regionValues.map((value: number, index: number) => (
+            <td key={`td-${region}-${index}`}>{separateNumbers(value)}</td>
+          ))}
+          <td key={`median-${region}-${startIndex}`} className='border-control'>
+            {separateNumbers(Math.trunc(calculateMedian(regionValues)))}
+          </td>
+          <td key={`avg-${region}-${startIndex}`}>{separateNumbers(Math.trunc(calculateAvg(regionValues)))}</td>
+          <td key={`min-${region}-${startIndex}`}>{separateNumbers(calculateMin(regionValues))}</td>
+          <td key={`max-${region}-${startIndex}`}>{separateNumbers(calculateMax(regionValues))}</td>
+        </tr>
+      )
     );
   });
 
@@ -87,6 +93,9 @@ export default function Table(props: any) {
         <>
           <h2 className='fs-2 mt-5 pt-5'>Tabell</h2>
           <h3 className='fs-6 fw-light text-muted pb-2'>11342: Areal og befolkning, etter region, statistikkvariabel og år</h3>{' '}
+          <button className='btn btn-secondary my-3' onClick={() => setHideEmptyCells(!hideEmptyCells)}>
+            {hideEmptyCells ? 'Show empty cells' : 'Hide empty cells'}
+          </button>
           <div className='px-3'>{table}</div>
         </>
       )}
