@@ -26,7 +26,7 @@ export default function NavigationBar(props: any) {
               {props.grafVisningOn ? 'Tabellvisning' : 'Grafvisning'}
             </Nav.Link>
             <NavDropdown title='Statistikkgrafer' id='basic-nav-dropdown' onClick={props.handleFirstClick}>
-              <NavDropdown.Item title='Gå til mediangraf' onClick={() => props.refs.scrollToRef(props.refs.medianRef)}>
+              <NavDropdown.Item title='Gå til mediangraf' onClick={() => scrollToTop()}>
                 Median
               </NavDropdown.Item>
               <NavDropdown.Item title='Gå til gjennomsnittsgraf' onClick={() => props.refs.scrollToRef(props.refs.avgRef)}>
