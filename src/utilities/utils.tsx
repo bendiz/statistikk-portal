@@ -9,9 +9,15 @@ export function processData(data: any): TableDataType {
     values: data.value,
   };
 }
-export function errorCheck(selectedOptions: any): [boolean, string[]] {
+export function errorCheck(selectedOptions: any): [boolean, string[], Object] {
   let errors = [''];
   let errorFound = false;
+
+  const errorMessages = {
+    variabel: 'Kun 1 variabel tillatt',
+    region: 'Minst 2 regioner påkrevd!',
+    year: 'Minst 3 årstall påkrevd!',
+  };
 
   if (selectedOptions.variabel.length > 1) {
     errors.push('variabel');
@@ -29,7 +35,7 @@ export function errorCheck(selectedOptions: any): [boolean, string[]] {
     errors.push('year');
     errorFound = true;
   }
-  return [errorFound, errors];
+  return [errorFound, errors, errorMessages];
 }
 
 export function scrollToRef(ref: any, yOffset = -100) {

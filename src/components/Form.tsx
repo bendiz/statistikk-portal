@@ -1,41 +1,25 @@
 import Selections from './Selections';
+import SelectVariabel from './Form/SelectVariabel';
 import Alert from 'react-bootstrap/Alert';
+import { useState } from 'react';
 
 export default function Form(props: any) {
+  const [show, setShow] = useState(true);
+
   return (
     <>
       <h1 className='pt-5 pb-3'>Statistikk Portal</h1>
       <div className='container text-center'>
         <form onSubmit={props.handleSubmit}>
           <div className='row row-cols-3'>
-            <div className='col statistikk-col'>
-              <h2 className={props.error.includes('variabel') ? 'red' : ''}>Statistikk (Påkrevd*)</h2>
-              {props.error.includes('variabel') && (
-                <div className='alert alert-danger p-1 my-2' role='alert'>
-                  Kun 1 variabel tillatt
-                </div>
-              )}
-              <div className='menu-dropdown'>
-                <Selections selected={props.selected.variabel} name='variabel' handleSelect={props.handleSelect} />
-              </div>
-            </div>
-            <div className='col' id='year-col'>
-              <h2 className={props.error.includes('year') ? 'red' : ''}>Årstall (Påkrevd*)</h2>
-              {props.error.includes('year') && (
-                <div className='alert alert-danger p-1 my-2' role='alert'>
-                  Minst 3 årstall påkrevd!
-                </div>
-              )}
-              <div className='menu-dropdown'>
-                <Selections selected={props.selected.year} name='year' handleSelect={props.handleSelect} />
-              </div>
-            </div>
+            <SelectVariabel props={props} title='variabel' type='statistikk' setShow={setShow} />
+            <SelectVariabel props={props} title='year' type='år' setShow={setShow} />
             <div className='col region-col'>
-              <h2 className={props.error.includes('region') ? 'red' : ''}>Region (Påkrevd*)</h2>
-              {props.error.includes('region') && (
-                <div className='alert alert-danger p-1 my-2' role='alert'>
-                  Minst 2 regioner påkrevd!
-                </div>
+              <h2 className={props.error.length > 0 && props.error[0].includes('region') ? 'red' : ''}>Region (Påkrevd*)</h2>
+              {props.error.length > 0 && props.error[0].includes('region') && (
+                <Alert variant='danger' onClose={() => setShow(false)} dismissible>
+                  {props.error[1]['region']}
+                </Alert>
               )}
               <select id='region' className=' mb-2 form-select' aria-label='Velg Inndeling (Fylke eller Kommune)' onChange={props.getRegion}>
                 {!props.regionQuery[1] && (

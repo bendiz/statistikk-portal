@@ -12,7 +12,7 @@ function App() {
   const [validQuery, setValidQuery] = useState(false);
   const [regionQuery, setRegionQuery] = useState(['', '']);
   const [region, setRegion] = useState<RegionType[]>([]);
-  const [error, setError] = useState<string[]>([]);
+  const [error, setError] = useState<Array<any>>([[], []]);
   const [showGraphAlert, setShowGraphAlert] = useState(false);
   const [selected, setSelected] = useState({
     variabel: [{}],
@@ -82,9 +82,10 @@ function App() {
     setValidQuery(false);
     const selectedOptions = selected;
     const errors = errorCheck(selectedOptions);
+    console.log(errors);
 
     if (errors[0]) {
-      setError(errors[1]);
+      setError([errors[1], errors[2]]);
       return;
     } else {
       setError([]);
