@@ -1,4 +1,4 @@
-import Selections from '../Selections';
+import Selections from './Selections';
 import Alert from 'react-bootstrap/Alert';
 
 export default function FormSelection({ props, title, type, setShow }: any) {

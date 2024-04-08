@@ -1,11 +1,11 @@
 import './App.css';
 import { useState, useRef } from 'react';
 import NavigationBar from './components/Navbar';
-import Form from './components/Form';
+import Form from './components/Form/Form';
 import Table from './components/Table';
 import { errorCheck, scrollToRef, processData } from './utilities/utils';
 import { RegionType, TableDataType } from './utilities/types';
-import { yearOptions } from './components/Selections';
+import { yearOptions } from './components/Form/Selections';
 import Alert from 'react-bootstrap/Alert';
 
 function App() {
@@ -82,7 +82,6 @@ function App() {
     setValidQuery(false);
     const selectedOptions = selected;
     const errors = errorCheck(selectedOptions);
-    console.log(errors);
 
     if (errors[0]) {
       setError([errors[1], errors[2]]);

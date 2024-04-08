@@ -1,5 +1,5 @@
 import Selections from './Selections';
-import SelectVariabel from './Form/SelectVariabel';
+import SelectVariabel from './SelectVariabel';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
 
