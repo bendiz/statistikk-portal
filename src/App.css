@@ -212,3 +212,7 @@ form {
 .chart-card {
   background-color: #fff;
 }
+
+.header-bottom {
+  margin-top: -1px;
+}
