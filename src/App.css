@@ -23,6 +23,10 @@ nav {
   padding: 1rem;
 }
 
+.header {
+  margin-bottom: -1px;
+}
+
 .menu-dropdown {
   height: 270px;
 }
@@ -211,8 +215,4 @@ form {
 
 .chart-card {
   background-color: #fff;
-}
-
-.header-bottom {
-  margin-top: -1px;
 }
