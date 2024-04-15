@@ -3,6 +3,8 @@ import { Badge } from 'react-bootstrap';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import LineChart from './LineChart';
 import { useState } from 'react';
+import investigatePic from '/img/investigate.svg';
+import diagrams from '/img/diagrams.svg';
 
 export default function Table(props: any) {
   const dataLength = props.data.year.length;
@@ -55,7 +57,7 @@ export default function Table(props: any) {
     return (
       (hideEmpty ? !hasEmptyCell : true) && (
         <tr key={`tr-${region}-${index}`}>
-          <th scope='row' className='table-light inner-th'>
+          <th scope='row' className='inner-th table-light'>
             {region}
           </th>
           {regionValues.map((value: number, index: number) => (
@@ -109,9 +111,9 @@ export default function Table(props: any) {
 
   const hideEmptyValuesBadge = (
     <Badge
-      className='toggle-empty-values-btn p-2 mb-2'
+      className='toggle-empty-values-btn p-2 mb-2 empty-values-badge'
+      id='empty-values-badge'
       pill
-      bg='primary'
       onClick={() => sethideEmpty(!hideEmpty)}
       title={hideEmpty ? 'Vis tomme verdier' : 'Skjul tomme verdier'}>
       {hideEmpty ? <IoEyeOutline /> : <IoEyeOffOutline />}
@@ -123,15 +125,35 @@ export default function Table(props: any) {
     <>
       {!props.grafVisning && (
         <>
-          <h2 className='fs-2 mt-5 pt-5'>Tabell</h2>
-          <h3 className='fs-6 fw-light text-muted pb-2'>11342: Areal og befolkning, etter region, statistikkvariabel og år</h3> {hideEmptyValuesBadge}
+          <div className='row mt-5 py-3'>
+            <div className='tabell-col col-6 offset-3'>
+              <img src={investigatePic} alt='' className='w-25' />
+              <h2 className='fs-2 pt-2'>Tabell</h2>
+              <h3 className='fs-6 text-white fw-light pb-2'>11342: Areal og befolkning, etter region, statistikkvariabel og år</h3>{' '}
+              {hideEmptyValuesBadge}
+            </div>
+          </div>
           <div className='px-3'>{table}</div>
         </>
       )}
       {props.grafVisning && sortedRegions.length <= 50 && (
         <>
-          <h2 className='fs-2 mt-5 pt-5'>Grafer</h2>
-          {hideEmptyValuesBadge}
+          <div className='row mt-5 pt-5'>
+            <div className='tabell-col col-6 offset-3'>
+              <img src={diagrams} alt='' className='w-25' />
+              <h2 className='fs-2 pt-2'>Grafer</h2>
+              <h3 className='fs-6 text-white fw-light pb-2'>Median, gjennomsnitt, minimum og maksimum pr. region</h3>{' '}
+              <span className='pt-2'>{hideEmptyValuesBadge}</span>
+            </div>
+          </div>
+          <div className='wave-top'>
+            <svg className='wave' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
+              <path
+                fill='#7DBFEB'
+                fill-opacity='1'
+                d='M0,160L120,170.7C240,181,480,203,720,181.3C960,160,1200,96,1320,64L1440,32L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z'></path>
+            </svg>
+          </div>
           <LineChart
             regions={sortedWithSortedData.map((data) => data.region)}
             variable={props.data.variable}
@@ -140,6 +162,14 @@ export default function Table(props: any) {
             refs={props.refs}
             hideEmpty={hideEmpty}
           />
+          <div className='wave-bottom'>
+            <svg className='wave' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
+              <path
+                fill='#7DBFEB'
+                fill-opacity='1'
+                d='M0,160L120,170.7C240,181,480,203,720,181.3C960,160,1200,96,1320,64L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z'></path>
+            </svg>
+          </div>
         </>
       )}
     </>

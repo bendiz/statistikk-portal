@@ -5,9 +5,6 @@ import { CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { LabelKey } from '../utilities/types';
 import { getRandomColor } from '../utilities/utils';
-import { useState } from 'react';
-import { FaRegArrowAltCircleUp, FaRegArrowAltCircleDown } from 'react-icons/fa';
-import Badge from 'react-bootstrap/Badge';
 
 Chart.register(CategoryScale);
 Chart.register(Colors);
@@ -97,17 +94,29 @@ export default function LineChart(props: any) {
         &nbsp; Sorter {!hideEmptyValues ? 'sykende' : 'stigende'}
       </Badge> */}
       {chartData.map((data, index) => (
-        <div key={data.datasets[0].label}>
-          <h3 className='mt-3 mb-1 text-center fs-6 fw-light text-muted'>{props.variable}</h3>
+        <div key={data.datasets[0].label} className='chart-card pb-5'>
+          <h3 className='graph-headings mb-1 text-center fs-6 fw-light'>{props.variable}</h3>
           <h3 className='mb-1 text-center fs-6 fw-light text-muted' id={data.datasets[0].label} ref={getRefName(data.datasets[0].label as LabelKey)}>
             <a className='text-decoration-none text-muted' onClick={() => props.scrollToRef(getRefName(data.datasets[0].label as LabelKey))}>
               {getLabelName(data.datasets[0].label as LabelKey)} pr. region ({yearToFrom})
             </a>
           </h3>
-          <div className='chart-container mb-5'>
+          <div className='chart-container'>
             <Line
               data={data}
               options={{
+                scales: {
+                  x: {
+                    grid: {
+                      color: '#7dbfeb2f',
+                    },
+                  },
+                  y: {
+                    grid: {
+                      color: '#7dbfeb2f',
+                    },
+                  },
+                },
                 plugins: {
                   legend: {
                     display: false,

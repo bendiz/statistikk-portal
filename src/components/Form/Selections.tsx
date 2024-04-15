@@ -46,6 +46,9 @@ function Selections(props: any) {
       hideSelectedOptions={false}
       components={{ DropdownIndicator }}
       styles={{
+        control: (baseStyles) => ({
+          ...baseStyles,
+        }),
         valueContainer: (baseStyles) => ({
           ...baseStyles,
           maxHeight: '3rem',

@@ -2,29 +2,60 @@
   margin: 0 auto;
   text-align: center;
   min-height: 100vh;
+  color: #2b2b2b;
+  --primary-color: #7dbfeb;
+  --secondary-color: #f13ea7;
+  --primary-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-color);
 }
 
 h2 {
   font-size: 1rem !important;
+  color: #fff !important;
+}
+
+nav {
+  background-color: var(--primary-color) !important;
+}
+
+.navbar {
+  box-shadow: var(--primary-box-shadow);
+  padding: 1rem;
 }
 
 .menu-dropdown {
   height: 270px;
 }
 
-/* Selected option */
+/* Valgt option */
 .css-tr4s17-option {
-  background-color: #0d6efd !important;
+  background-color: #9fd0ef !important;
 }
 
-/* Search icon inside search bar */
+/* Hover på option */
+.css-tr4s17-option:hover {
+  background-color: #9fd0ef8d !important;
+}
+
+/* Select option som er i fokus */
+.css-d7l1ni-option {
+  background-color: #9fd0ef70 !important;
+}
+
+/* Søkeikon på innsiden av søkebar */
 .css-1xc3v61-indicatorContainer {
   fill: hsl(0, 0%, 80%);
 }
 
+/* Kryss i søkebar */
 .css-12a83d4-MultiValueRemove,
 .css-tj5bde-Svg {
   color: rgba(255, 30, 30, 0.342);
+}
+
+/* Valgte verdier i søkebar */
+.css-1p3m7a8-multiValue {
+  background-color: #9fd0ef8d !important;
 }
 
 .bg-grey {
@@ -37,12 +68,21 @@ h2 {
   margin: 0 auto;
 }
 
+.table-info {
+  background: rgba(255, 255, 255, 0.26);
+  box-shadow: var(--primary-box-shadow);
+}
+
 .border-control {
   border-left: 1px solid #c6c7c83c;
 }
 
 .data-btn {
-  width: 200px;
+  width: 50%;
+  height: 150px;
+  padding-block: 3rem !important;
+  background-color: var(--secondary-color) !important;
+  color: #ffffff !important;
 }
 
 th:nth-of-type(1) {
@@ -54,7 +94,7 @@ th:nth-of-type(2) {
 }
 
 .inner-th {
-  background-color: #cff4fc58 !important;
+  background-color: #ffffffb9 !important;
 }
 
 .chart-container {
@@ -71,8 +111,22 @@ th:nth-of-type(2) {
   width: 80vw;
 }
 
+.dropdown-menu {
+  background-color: var(--primary-color) !important;
+}
+
 a.dropdown-item:hover {
-  background-color: #deebff;
+  background-color: var(--secondary-color) !important;
+}
+
+a {
+  color: #fff !important;
+  font-weight: bolder !important;
+}
+
+a:hover {
+  border-bottom: 2px solid var(--secondary-color);
+  color: #ffffff44;
 }
 
 table {
@@ -80,11 +134,81 @@ table {
   empty-cells: hide !important;
 }
 
+.table {
+  background-color: transparent !important;
+}
+
+.table > :not(caption) > * > * {
+  background-color: none;
+}
+
+td {
+  background-color: #fff;
+}
+
 @media (max-width: 1200px) {
   .chart-container {
     height: 40vw;
   }
 }
-.toggle-empty-values-btn {
+.toggle-empty-values-btn,
+a {
   cursor: pointer;
+}
+
+#empty-values-badge {
+  background-color: var(--secondary-color) !important;
+}
+
+.år-col,
+.statistikk-col,
+.region-col,
+.tabell-col {
+  background: rgba(255, 255, 255, 0.26);
+  border-radius: 16px;
+  box-shadow: var(--primary-box-shadow);
+  backdrop-filter: blur(2.1px);
+  -webkit-backdrop-filter: blur(2.1px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 1rem;
+  margin-inline: 0.2rem;
+}
+
+.badge {
+  background-color: #fff;
+}
+
+.card {
+  padding: 1rem;
+  background-color: var(--primary-color) !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  border: #ffffff22 solid 1px !important;
+}
+
+.card-header {
+  background-color: rgba(255, 255, 255, 0.26) !important;
+  border-radius: 16px;
+  box-shadow: var(--primary-box-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.card-body {
+  width: 75%;
+}
+
+.info-row {
+  background-color: #fff;
+}
+
+form {
+  padding-bottom: 3rem;
+}
+
+.wave {
+  width: 100%;
+  background-color: #fff;
+}
+
+.chart-card {
+  background-color: #fff;
 }

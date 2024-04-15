@@ -8,10 +8,9 @@ export default function Form(props: any) {
 
   return (
     <>
-      <h1 className='pt-5 pb-3'>Statistikk Portal</h1>
       <div className='container text-center'>
         <form onSubmit={props.handleSubmit}>
-          <div className='row row-cols-3'>
+          <div className='row'>
             <SelectVariabel props={props} title='variabel' type='statistikk' setShow={setShow} />
             <SelectVariabel props={props} title='year' type='år' setShow={setShow} />
             <div className='col region-col'>
@@ -51,7 +50,9 @@ export default function Form(props: any) {
           </div>
           <div className='row'>
             <div className='col-md-6 offset-3'>
-              <button className='data-btn btn btn-success p-3'>Hent data</button>
+              <button className='data-btn btn p-3 my-5'>
+                <h5>Hent data</h5>
+              </button>
             </div>
           </div>
         </form>

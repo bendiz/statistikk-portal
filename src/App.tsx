@@ -1,6 +1,8 @@
 import './App.css';
 import { useState, useRef } from 'react';
 import NavigationBar from './components/Navbar';
+import Header from './Header';
+import About from './About';
 import Form from './components/Form/Form';
 import Table from './components/Table';
 import { errorCheck, scrollToRef, processData } from './utilities/utils';
@@ -122,6 +124,8 @@ function App() {
       )}
       {!validQuery && (
         <div>
+          <Header />
+          <About />
           <Form
             selected={selected}
             error={error}

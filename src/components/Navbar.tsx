@@ -4,10 +4,10 @@ import { scrollToTop } from '../utilities/utils';
 
 export default function NavigationBar(props: any) {
   return (
-    <Navbar className='fixed-top z-1' expand='lg' bg='light' variant='light'>
+    <Navbar className='fixed-top z-1' expand='lg' variant='dark'>
       <Container>
         <Navbar.Brand>
-          <a href={window.location.pathname} className='text-black d-flex' title='Gå Tilbake'>
+          <a href={window.location.pathname} className='text-white d-flex' title='Gå Tilbake'>
             <BiMath />
           </a>
         </Navbar.Brand>
