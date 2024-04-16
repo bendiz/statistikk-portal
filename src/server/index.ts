@@ -33,7 +33,7 @@ app.post(
 );
 
 app.get(
-  '/api/:region',
+  '/api/region/:region',
   CatchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const { region } = req.params;
     const response = await fetch(tableUrl);
@@ -56,7 +56,11 @@ app.get(
       regionFilter = regionNamesArr.map((value: string, index: number) => ({ navn: value, kode: regionCodesArr[index] }));
     }
 
-    res.json(regionFilter);
+    if (region.length > 0) {
+      res.json(regionFilter);
+    } else {
+      res.redirect('/');
+    }
   })
 );
 

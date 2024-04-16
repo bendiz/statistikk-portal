@@ -72,7 +72,7 @@ function App() {
     } else {
       const queryValue: string = event.target.value;
       const queryName: string = event.target.selectedOptions[0].text;
-      const response = await fetch(`http://localhost:5173/api/${queryValue}`);
+      const response = await fetch(`http://localhost:5173/api/region/${queryValue}`);
       const data = await response.json();
       setRegion(data);
       setRegionQuery([queryValue, queryName]);
