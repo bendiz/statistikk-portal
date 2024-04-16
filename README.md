@@ -49,7 +49,12 @@ Kalkulering av median, gjennomsnitt, minimum og maksimum skjer på hver rad før
 
 #### 📉 Grafer
 
-I grafkomponenten blir tomme rader som eventuelt er filtrert ut bragt med, for ikke å vises i grafene heller. Data for alle regioner blir sammenlignet i alle fire statistikkalkulasjoner, og vist fram i en graf. Hver region/datapunkt i alle grafer får en tilfeldig farge for å øke lesbarheten. Den tilfeldige fargen blir generert ved hjelp av funksjonen getRandomColor() som tar en # pluss alle mulige hexadecimale siffer og looper over de 6 ganger for å danne en tilfeldig hexadecimal fargekode. Verdiene blir vist som punkt, men har også verdietiketter over seg for å se den nøyaktige verdien uten å måtte "hover" over datapunktet. Det er satt et maksimum antall regioner på 50 for å kunne vise fram grafer, dette fordi etikettene ikke kan vises på en god måte. 
+I grafkomponenten blir tomme rader som eventuelt er filtrert ut bragt med, for ikke å vises i grafene heller. Data for alle regioner blir sammenlignet i alle fire statistikkalkulasjoner, og vist fram i en graf. Hver region/datapunkt i alle grafer får en tilfeldig farge for å øke lesbarheten. Den tilfeldige fargen blir generert ved hjelp av funksjonen getRandomColor() som tar en # pluss alle mulige hexadecimale siffer og looper over de 6 ganger for å danne en tilfeldig hexadecimal fargekode. Verdiene blir vist som punkt, men har også verdietiketter over seg for å se den nøyaktige verdien uten å måtte "hover" over datapunktet. Det er satt et maksimum antall regioner på 50 for å kunne vise fram grafer, dette fordi etikettene ikke kan vises på en god måte.
+
+#### 🌎 Øvrige kommentarer
+I App.tsx skjer det meste av state handling, som deretter er passert nedover som props til "barn" av den komponenten. Før brukeren sender inn et gyldig skjema, så er validQuery satt til false, som gjør at headeren, infoseksjonen og selve skjemaet blir renderet. Når et gyldig skjema er innsendt, blir validQuery satt til true og en navigasjonsbar og en tabell blir renderet.
+showGraphAlert (vis graf error) er satt til false som default, men i navigasjonsbaren kan brukeren velge å skifte til grafvisning, men kun hvis antall regioner er under eller lik 50. Hvis antall regioner er over 50, blir showGraphAlert true og en alertboks vil bli synlig. Det er klikk i navigasjonsbaren på en av statistikkgrafene eller grafvisning som toggler denne true/false.
+useState hooken re-rendrer DOMen når det skjer en endring i variabelen, som gjør at vi kan rendere komponentene på nytt med en gang den endres. Slik er UIen alltid oppdatert i henhold til den nyeste staten.
 
 ## ⚙️ Kjør lokalt
 
