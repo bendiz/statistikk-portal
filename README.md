@@ -83,27 +83,30 @@ I App.tsx skjer det meste av state handling, som deretter er passert nedover som
 showGraphAlert (vis graf error) er satt til false som default, men i navigasjonsbaren kan brukeren velge å skifte til grafvisning, men kun hvis antall regioner er under eller lik 50. Hvis antall regioner er over 50, blir showGraphAlert true og en alertboks vil bli synlig. Det er klikk i navigasjonsbaren på en av statistikkgrafene eller grafvisning som toggler denne true/false.
 useState hooken re-rendrer DOMen når det skjer en endring i variabelen, som gjør at vi kan rendere komponentene på nytt med en gang den endres. Slik er UIen alltid oppdatert i henhold til den nyeste staten.
 
-## ⚙️ Kjør lokalt
 
-Klon prosjektet
+## ⚙️ Demo
+
+#### ⚡ Kjør lokalt
+
+1. Klon prosjektet
 
 ```bash
   git clone https://github.com/bendiz/statistikk-portal
 ```
 
-Gå til prosjektmappe
+2. Gå til prosjektmappe
 
 ```bash
   cd statistikk-portal
 ```
 
-Installer dependencies
+3. Installer dependencies
 
 ```bash
   npm install
 ```
 
-Start server (velg en av kommandoene)
+4. Start server (velg en av kommandoene)
 
 ```bash
   npm run start
@@ -112,3 +115,80 @@ Start server (velg en av kommandoene)
 ```bash
   npm run dev
 ```
+
+5. Brukeren kjører npm run dev eller npm run start i konsollen.
+Dette gjør at både vite development serveren starter samtidig som node express serveren.
+
+6. Brukeren åpner http://localhost:5173/ i nettleseren som laster inn de importerte modulene.
+Main.tsx rendrer App.tsx, som inneholder applikasjonen.
+
+7. Brukeren blar ned til skjemaet og kan begynne å velge variabel, år og regioninndeling. <br>
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/93969a69-3cb4-4a91-807a-1c7a81a5424b)
+
+ - Her er ingen alternativer lastet inn fra tabellen enda, men med en gang brukeren tar et valg
+    på "hele landet", "fylker", eller "kommuner", så blir den asynkrone funksjonen getRegion() fyrt av.
+ - Her sjekker den at brukeren ikke har valgt alternativet som kun fungerer som en placeholder (verdi = 0).
+
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/b19b7e4b-0718-45e1-a167-9969547a0101) 
+- En fetch request gjøres til http://localhost:5173/api/region/??? med valgt verdi istedet for spørsmålstegn.
+
+
+- Jeg har satt opp en proxy som gjør at denne forespørselen egentlig blir videresendt til http://localhost:3000/api/region/???, der node express serveren kjører.
+  <br>
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/88c74004-fe5d-4539-b03b-3ce0e6566031)
+
+- Det blir gjort en GET-request som henter ut regionen basert på request parameterne.
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/d2234f2f-3b28-4fcf-bfb9-4bdb0ee3d8b6)
+
+- Tabellen blir hentet via URL til API konsollet til SSB.
+
+- Regionnavnene blir lagret i en array og regionskodene blir lagret i en array. Deretter blir disse regionsnavnene og kodene filtrert basert på lengden på koden. Alle fylker har en regionskode som er kortere enn 3 siffer, og alle kommuner har en regionskode som er lengre enn 2 siffer. Hvis brukeren har valgt alternativet for 'alle', så blir alle verdiene med. Dette blir sendt over som json hvis det var et parameter der i utgangspunktet.
+
+8. Brukeren gjennomfører spørringen ved å velge 1 statistisk variabel, minimum 3 årstall og minimum 2 regioner og trykke 'Hent data'.
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/e957ccb7-b74f-4a09-8b76-2d9dd4056528)
+
+- handleSubmit funksjonen fyres av uten at siden refreshes.
+
+- Valgene blir lagret i en variabel som blir errorsjekket med errorCheck-funksjonen. Den lager en tom array og setter errorFound til false. Hvis noen av parameterne ikke stemmer i forhold til påkrevd lengde, så blir navnet på variabelen lagt til i arrayet og errorFound satt til true.
+
+- Det blir returnert en array med errorFound, errorArrayen og et objekt med errorMessages der keys tilsvarer navnet på den/de variablene som errorene kan forekomme i Hvis det finnes noen errorer blir de oppdatert i state, og handleSubmit funksjonen returneres før en POST request blir gjort.
+
+- Error blir sendt som prop til Form-komponenten, som rendrer en errormelding dersom det finnes.
+
+- Spørringen er uten errorer og sendes videre til en try/catch blokk, som forsøker å sende en POST-request til /api/submit med valgene. Hvis brukeren ikke får kontakt med serveren, vil h*n få en errormelding om at nettverksresponsen feilet. Ellers så blir tabelldataen lagret i state og validQuery satt til true i state.
+
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/bb1415fa-9934-4a7f-9c1a-7aff0d7c7bba)
+
+- En navigasjonsbar, en infoseksjon og en tabell blir rendret basert på at validQuery er true.
+
+- Navigasjonsbaren får en grafVisning prop som sjekker om tabelldataen er under/lik 50. Når man trykker på grafvisning eller en av statistikkgrafene, vil denne tillate deg/ikke tillate deg å se grafdata basert på om det er true eller false. En alertboks kommer opp og siden står uendret ellers hvis du har over 50 regionsvalg.
+
+- Jeg bruker useRef hooken i App.tsx for å finne plasseringen til elementene i DOMen, slik at jeg kan hoppe til de når jeg klikker på linken.
+
+- Brukeren har mulighet til å skjule tomme rader ved å trykke på knappen. Dette er oppnådd ved å bruke state/set state ved klikking på knappen. I returneringen av radene i tabellen, så vil radene uten verdier bli utelatt basert på om hideEmpty er true. hasEmptyCell sjekker om det er true at alle verdiene i raden har en verdi som er lik 0. Eks: (Her ser du at Vestfold-2019 forsvinner fra tabellen, og at ikonet endres og teksten på knappen endres til "vis tomme rader").
+
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/d6bea2e7-5b8a-4400-af98-68295ee0e527)
+
+- Når brukeren trykker på grafvisning er tilstanden om å skjule rader med 0 bevart, men brukeren har mulighet til å skru det på igjen her også.
+
+- I grafvisningen vises kun median, gjennomsnitt, minimum og maksimum for alle valgte regioner sammenlignet.
+
+![grafvisning](https://github.com/bendiz/statistikk-portal/assets/101096042/6fa9eab6-cddf-4096-aefa-1758c2080aea)
+
+- For å framstille dette på en god og enkel måte har jeg brukt chartJS biblioteket, som er svært fleksibelt og enkelt å customize. 
+
+- Her mapper jeg over alle regionene og de forskjellige statistikkdataene for å lage et linjediagramdataen. En tilfeldig farge blir generert for å skille datapunktene.
+
+- Årstallene i headingene er basert på hvilke år som er valgt som parameter.
+
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/29b90641-d83a-48d4-b6ef-25b0cbf3e49c)
+
+- I linjekartene har h3-headingene et anchor element inni seg som gjør at man scroller til elementet med riktig label(navn på statistisk kalkulering) i DOMen hvis man klikker på linken.
+
+- Jeg har lagt til en smooth-scroll effect og lagt til et lite offset på hvor den skal scrolle til, så den ikke kutter tekst.
+
+ Et eksempel på hva som skjer hvis man klikker "Maksimum"
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/55e1e87e-4d29-40fe-95ba-62a4e4ad8a6b)
+
+
+
