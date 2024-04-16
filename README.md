@@ -15,11 +15,19 @@ Det er satt opp en route for app.all nederst i koden som lager en ny ExpressErro
 
 Når brukeren velger inndeling av region gjøres det en GET-request til serveren, som igjen henter tabellen fra SSB sin API konsoll og sender tilbake regionene til frontenden i JSON format.
 
+Ekempel på request header ved valg av fylker
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/bb051689-a196-43e2-ada7-34ba8b9a95c5)
+Eksempel på payload ved valg av fylker
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/96f36d1a-38d0-4836-bdfa-8608f31bbb75)
+
+
 Før serveren henter mer data fra SSB, så må brukeren oppgi:
 
 - 1 statistisk variabel
 - Minimum 3 årstall
 - Minimum 2 regioner
+
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/835109a2-9a53-4fe0-aa11-e4d65142227f)
 
 Brukeren blir stoppet av errorsjekk i frontend hvis h\*n forsøker å hente ut data uten å oppfylle overnevnte kriterier. Det vil komme opp en rød alertboks der brukeren ikke har fylt ut riktig, og som forhindrer informasjonen fra å bli sendt over til serveren.
 For at alle alertboksene skal kunne dukke opp samtidig, så blir hver error lagt til i en array av strings. 
@@ -30,9 +38,20 @@ Dersom man skulle prøve seg på å sende en spørring uten å gå via skjemaet 
 
 Når dataen oppfyller kriteriene, blir dataene fra skjemaet sendt til serveren, omstrukturert slik at spørringen er i tråd med SSB sin brukerveiledning, og deretter sendt som en POST request til SSB.
 
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/8ce65d30-a69a-4a87-8025-90ef9a663648)
+
 På serversiden er alle asynkrone funksjoner nested i en catchAsync funksjon for å fange opp eventuelle feilmeldinger og sende videre til errorhandling middleware funksjonen. Dette for å unngå alle try/catch blokkene. Dersom en error oppstår vil brukeren få en errorkode, feilmelding og link til å forsøke en ny spørring.
 
 Siden dataen er av begrenset/fast størrelse, så sendes hele responsen over i JSON format tilbake til frontenden.
+Eksempel
+
+Header
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/b5a43241-6b1f-474b-a7ed-e1681aca2e2b)
+Request
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/eedf499d-42b1-4260-bffc-071203ea0b71)
+Response
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/b6d5351f-9a32-438c-9cfd-57892205b037)
+
 
 #### 🛞 Navigasjon
 
