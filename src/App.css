@@ -23,8 +23,13 @@ nav {
   padding: 1rem;
 }
 
+/* Fiks "rar" oppførsel med at waves har en ørliten hvit strek */
 .header {
   margin-bottom: -1px;
+}
+
+path {
+  margin-bottom: -2px;
 }
 
 .menu-dropdown {
