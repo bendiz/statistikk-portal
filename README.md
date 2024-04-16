@@ -1,5 +1,5 @@
 # 📈 Statistikk Portal
-![image](https://github.com/bendiz/statistikk-portal/assets/101096042/1c21a3e7-c795-4397-ab58-56bca7f28131)
+![image](https://github.com/bendiz/statistikk-portal/assets/101096042/ef6b1a48-4d8a-479c-85dc-f356f4fec5f7)
 
 Denne portalen henter ut data fra en av SSB sine tabeller (Tabell 11342: Areal og befolkning i kommuner, fylker og hele landet (K) 2007-2024), gjør utregninger av median, gjenomsnitt, minimum og maksimum pr. region og presenterer dataene i en tabell og visualiseres med grafer.
 
