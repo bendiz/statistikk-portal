@@ -43,3 +43,33 @@ Kalkulering av median, gjennomsnitt, minimum og maksimum skjer på hver rad før
 #### Grafer
 
 I grafkomponenten blir tomme rader som eventuelt er filtrert ut bragt med, for ikke å vises i grafene heller. Data for alle regioner blir sammenlignet i alle fire statistikkalkulasjoner, og vist fram i en graf. Hver region/datapunkt i alle grafer får en tilfeldig farge for å øke lesbarheten. Verdiene blir vist som punkt, men har også verdietiketter over seg for å se den nøyaktige verdien uten å måtte "hover" over datapunktet.
+
+## Kjør lokalt
+
+Klon prosjektet
+
+```bash
+  git clone https://github.com/bendiz/statistikk-portal
+```
+
+Gå til prosjektmappe
+
+```bash
+  cd statistikk-portal
+```
+
+Installer dependencies
+
+```bash
+  npm install
+```
+
+Start server (velg en av kommandoene)
+
+```bash
+  npm run start
+```
+
+```bash
+  npm run dev
+```
