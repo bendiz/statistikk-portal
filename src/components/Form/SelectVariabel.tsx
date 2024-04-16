@@ -1,7 +1,7 @@
 import Selections from './Selections';
 import Alert from 'react-bootstrap/Alert';
 
-export default function FormSelection({ props, title, type, setShow }: any) {
+export default function SelectVariabel({ props, title, type, setShow }: any) {
   let errorMessage;
   if (props.error.length > 0) {
     errorMessage = Object.values(props.error[1]).filter((e: any) => [type, title].some((val) => e.includes(val)))[0];
