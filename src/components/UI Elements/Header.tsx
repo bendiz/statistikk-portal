@@ -1,5 +1,5 @@
 import statistikkHeader from '/img/statistikk-header-1.png';
-import { TopWave } from './components/UI Elements/Wave';
+import { TopWave } from './Wave';
 
 export default function Header() {
   return (

@@ -1,8 +1,8 @@
 import './App.css';
 import { useState, useRef } from 'react';
 import NavigationBar from './components/UI Elements/Navbar';
-import Header from './Header';
-import About from './About';
+import Header from './components/UI Elements/Header';
+import About from './components/UI Elements/About';
 import Form from './components/Form/Form';
 import Table from './components/Statistics/Table';
 import { errorCheck, scrollToRef, processData } from './utilities/utils';
