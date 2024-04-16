@@ -1,6 +1,6 @@
 # 📈 Statistikk Portal
 
-![Bilde av landingsside](https://github.com/bendiz/statistikk-portal/issues/1#issue-2246536576)
+![Bilde av landingsside]([https://github.com/bendiz/statistikk-portal/issues/1#issue-2246536576](https://private-user-images.githubusercontent.com/101096042/322938952-f521c25b-5636-4961-bd57-54e3cf1d8f2a.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTMyODgxMzEsIm5iZiI6MTcxMzI4NzgzMSwicGF0aCI6Ii8xMDEwOTYwNDIvMzIyOTM4OTUyLWY1MjFjMjViLTU2MzYtNDk2MS1iZDU3LTU0ZTNjZjFkOGYyYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwNDE2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDQxNlQxNzE3MTFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01ZTdkN2U2OTg1NTMzN2M1YmYyZmQ4MjBjM2M4MDBiNWQ0Zjk1YzYyYmYxYTI0OTkyMTljZDdiNDFkNGU1N2I3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.r0bI8eZB8wBwsFxVCJ8aq8RutXfJDvOvKJGmQCooSsI))
 
 Denne portalen henter ut data fra en av SSB sine tabeller (Tabell 11342: Areal og befolkning i kommuner, fylker og hele landet (K) 2007-2024), gjør utregninger av median, gjenomsnitt, minimum og maksimum pr. region og presenterer dataene i en tabell og visualiseres med grafer.
 
