@@ -27,7 +27,10 @@ Før serveren henter mer data fra SSB, så må brukeren oppgi:
 - 1 statistisk variabel
 - Minimum 3 årstall
 - Minimum 2 regioner
+
+
 <br>
+
 ![image](https://github.com/bendiz/statistikk-portal/assets/101096042/835109a2-9a53-4fe0-aa11-e4d65142227f)
 
 Brukeren blir stoppet av errorsjekk i frontend hvis h\*n forsøker å hente ut data uten å oppfylle overnevnte kriterier. Det vil komme opp en rød alertboks der brukeren ikke har fylt ut riktig, og som forhindrer informasjonen fra å bli sendt over til serveren.
