@@ -14,16 +14,21 @@ app.post(
   '/api/submit',
   CatchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const selectedOptions = req.body;
-    const selectionQuery = createTableQuery(selectedOptions);
-    const externalResponse = await fetch(tableUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(selectionQuery),
-    });
-    const externalData = await externalResponse.json();
-    res.json(externalData);
+
+    if (selectedOptions.region.length < 2 || selectedOptions.year.length < 3 || selectedOptions.variabel.length > 1) {
+      throw new ExpressError('Invalid query', 500);
+    } else {
+      const selectionQuery = createTableQuery(selectedOptions);
+      const externalResponse = await fetch(tableUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectionQuery),
+      });
+      const externalData = await externalResponse.json();
+      res.json(externalData);
+    }
   })
 );
 
@@ -62,7 +67,7 @@ app.all('*', (_req: Request, _res: Response, next: NextFunction) => {
 app.use((err: ExpressError, _: Request, res: Response, _next: NextFunction): void => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Oh no, something went wrong!';
-  res.status(statusCode).render('error', { err });
+  res.status(statusCode).send(`Error ${err.statusCode}: ${err.message}. <a href="http://localhost:5173/">Click here to try again</a>`);
 });
 
 app.listen(port, () => {

@@ -42,7 +42,7 @@ export default function Form(props: any) {
                         regionQuery={props.regionQuery}
                       />
                     </div>
-                    {props.regionQuery && <span className='badge bg-grey fw-bold'>{props.region.length} resultater</span>}
+                    {props.regionQuery && <span className='badge results-badge bg-light text-muted fw-bold'>{props.region.length} resultater</span>}
                   </div>
                 </div>
               )}

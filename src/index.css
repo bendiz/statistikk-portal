@@ -1,9 +1,12 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #242424;
   scroll-behavior: smooth;
+  width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --primary-color: #7dbfeb;
+  --secondary-color: #f13ea7;
+  --primary-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .red {

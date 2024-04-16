@@ -1,10 +1,10 @@
 import { BiMath } from 'react-icons/bi';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import { scrollToTop } from '../utilities/utils';
+import { scrollToTop } from '../../utilities/utils';
 
 export default function NavigationBar(props: any) {
   return (
-    <Navbar className='fixed-top z-1' expand='lg' variant='dark'>
+    <Navbar className='fixed-top z-2' expand='lg' variant='dark'>
       <Container>
         <Navbar.Brand>
           <a href={window.location.pathname} className='text-white d-flex' title='Gå Tilbake'>
@@ -26,7 +26,7 @@ export default function NavigationBar(props: any) {
               {props.grafVisningOn ? 'Tabellvisning' : 'Grafvisning'}
             </Nav.Link>
             <NavDropdown title='Statistikkgrafer' id='basic-nav-dropdown' onClick={props.handleFirstClick}>
-              <NavDropdown.Item title='Gå til mediangraf' onClick={() => scrollToTop()}>
+              <NavDropdown.Item title='Gå til mediangraf' onClick={() => props.refs.scrollToRef(props.refs.medianRef)}>
                 Median
               </NavDropdown.Item>
               <NavDropdown.Item title='Gå til gjennomsnittsgraf' onClick={() => props.refs.scrollToRef(props.refs.avgRef)}>

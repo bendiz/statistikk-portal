@@ -3,8 +3,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Colors } from 'chart.js';
 import { CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { LabelKey } from '../utilities/types';
-import { getRandomColor } from '../utilities/utils';
+import { LabelKey } from '../../utilities/types';
+import { getRandomColor } from '../../utilities/utils';
 
 Chart.register(CategoryScale);
 Chart.register(Colors);
@@ -84,17 +84,8 @@ export default function LineChart(props: any) {
 
   return (
     <div className='charts'>
-      {/* <Badge
-        className='toggle-empty-values-btn mx-2 p-2'
-        pill
-        bg='primary'
-        onClick={() => setHideEmptyValues(!hideEmptyValues)}
-        title={hideEmptyValues ? 'Vis tomme verdier' : 'Skjul tomme verdier'}>
-        {hideEmptyValues ? <FaRegArrowAltCircleUp /> : <FaRegArrowAltCircleDown />}
-        &nbsp; Sorter {!hideEmptyValues ? 'sykende' : 'stigende'}
-      </Badge> */}
       {chartData.map((data, index) => (
-        <div key={data.datasets[0].label} className='chart-card pb-5'>
+        <div key={data.datasets[0].label} className='chart-section pb-5'>
           <h3 className='graph-headings mb-1 text-center fs-6 fw-light'>{props.variable}</h3>
           <h3 className='mb-1 text-center fs-6 fw-light text-muted' id={data.datasets[0].label} ref={getRefName(data.datasets[0].label as LabelKey)}>
             <a className='text-decoration-none text-muted' onClick={() => props.scrollToRef(getRefName(data.datasets[0].label as LabelKey))}>
@@ -105,6 +96,14 @@ export default function LineChart(props: any) {
             <Line
               data={data}
               options={{
+                layout: {
+                  padding: {
+                    left: 50,
+                    right: 50,
+                    top: 50,
+                    bottom: 50,
+                  },
+                },
                 scales: {
                   x: {
                     grid: {

@@ -1,10 +1,10 @@
 import './App.css';
 import { useState, useRef } from 'react';
-import NavigationBar from './components/Navbar';
+import NavigationBar from './components/UI Elements/Navbar';
 import Header from './Header';
 import About from './About';
 import Form from './components/Form/Form';
-import Table from './components/Table';
+import Table from './components/Statistics/Table';
 import { errorCheck, scrollToRef, processData } from './utilities/utils';
 import { RegionType, TableDataType } from './utilities/types';
 import { yearOptions } from './components/Form/Selections';
@@ -105,6 +105,7 @@ function App() {
       } else if (response.ok) {
         const data = await response.json();
         const processedData = processData(data);
+        console.log(processedData);
         setTableData(processedData);
         setValidQuery(true);
       }

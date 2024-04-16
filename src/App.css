@@ -3,17 +3,36 @@
   text-align: center;
   min-height: 100vh;
   color: #2b2b2b;
-  --primary-color: #7dbfeb;
-  --secondary-color: #f13ea7;
-  --primary-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   background-color: var(--primary-color);
 }
 
+.toggle-empty-values-btn,
+a {
+  cursor: pointer;
+}
+
+/* WAVE BAKGRUNN */
+.wave {
+  width: 100%;
+  background-color: #fff;
+}
+
+.wave-top {
+  margin-top: -75px;
+}
+
+/* Unngå overlapp av header bildet*/
+.header {
+  margin-bottom: 4.5rem;
+}
+
+/* HEADINGS */
 h2 {
   font-size: 1rem !important;
   color: #fff !important;
 }
 
+/* NAVBAR */
 nav {
   background-color: var(--primary-color) !important;
 }
@@ -23,13 +42,33 @@ nav {
   padding: 1rem;
 }
 
-/* Fiks "rar" oppførsel med at waves har en ørliten hvit strek */
-.header {
-  margin-bottom: -1px;
+.dropdown-menu {
+  background-color: #fff !important;
+  color: var(--primary-color) !important;
 }
 
-path {
-  margin-bottom: -2px;
+a.dropdown-item:hover {
+  background-color: var(--secondary-color) !important;
+  color: #fff;
+}
+
+a {
+  font-weight: bolder !important;
+}
+
+a:hover {
+  border-bottom: 2px solid var(--secondary-color);
+  color: #ffffff44;
+}
+
+/* INFO SEKSJON */
+.info-row {
+  background-color: #fff;
+}
+
+/* FORM */
+form {
+  padding-bottom: 3rem;
 }
 
 .menu-dropdown {
@@ -38,7 +77,7 @@ path {
 
 /* Valgt option */
 .css-tr4s17-option {
-  background-color: #9fd0ef !important;
+  background-color: var(--secondary-color) !important;
 }
 
 /* Hover på option */
@@ -67,23 +106,48 @@ path {
   background-color: #9fd0ef8d !important;
 }
 
-.bg-grey {
-  background-color: #e6e5e5;
-  color: #333333 !important;
+/* TABLE STYLES*/
+table {
+  max-width: 1920px;
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.table {
-  max-width: 1920px;
-  margin: 0 auto;
+.table-container {
+  background-color: #fff;
 }
 
 .table-info {
-  background: rgba(255, 255, 255, 0.26);
-  box-shadow: var(--primary-box-shadow);
+  background-color: var(--secondary-color) !important;
+  color: #fff !important;
+  padding: 0.7rem;
 }
 
-.border-control {
-  border-left: 1px solid #c6c7c83c;
+.inner-th {
+  background-color: var(--primary-color) !important;
+  color: #fff;
+  border-bottom: thin solid rgba(0, 0, 0, 0.042) !important;
+  border-inline: thin solid rgba(0, 0, 0, 0.042) !important;
+  padding-block: 0.5rem;
+  width: 10%;
+}
+
+tr,
+td {
+  border: thin solid rgba(0, 0, 0, 0.042) !important;
+}
+
+tr:last-child > .region-name-th {
+  border-bottom-left-radius: 5px;
+}
+
+tr:first-of-type th:nth-of-type(1) {
+  border-top-left-radius: 5px;
+}
+
+tr:first-of-type th:nth-of-type(2) {
+  border-top-right-radius: 5px;
 }
 
 .data-btn {
@@ -94,81 +158,29 @@ path {
   color: #ffffff !important;
 }
 
-th:nth-of-type(1) {
-  border-top-left-radius: 5px;
+.region-name-th {
+  width: 20%;
 }
 
-th:nth-of-type(2) {
-  border-top-right-radius: 5px;
+.bg-light-blue {
+  background-color: #f1f8ff;
 }
 
-.inner-th {
-  background-color: #ffffffb9 !important;
-}
-
-.chart-container {
-  max-width: 1280px;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
+/* LINJE GRAF */
+.chart-section {
+  background-color: #fff;
 }
 
 .chart-container {
   position: relative;
+  display: flex;
+  justify-content: center;
   margin: auto;
   height: 65vh;
   width: 80vw;
 }
 
-.dropdown-menu {
-  background-color: var(--primary-color) !important;
-}
-
-a.dropdown-item:hover {
-  background-color: var(--secondary-color) !important;
-}
-
-a {
-  color: #fff !important;
-  font-weight: bolder !important;
-}
-
-a:hover {
-  border-bottom: 2px solid var(--secondary-color);
-  color: #ffffff44;
-}
-
-table {
-  border-collapse: separate;
-  empty-cells: hide !important;
-}
-
-.table {
-  background-color: transparent !important;
-}
-
-.table > :not(caption) > * > * {
-  background-color: none;
-}
-
-td {
-  background-color: #fff;
-}
-
-@media (max-width: 1200px) {
-  .chart-container {
-    height: 40vw;
-  }
-}
-.toggle-empty-values-btn,
-a {
-  cursor: pointer;
-}
-
-#empty-values-badge {
-  background-color: var(--secondary-color) !important;
-}
-
+/* KOLONNER */
 .år-col,
 .statistikk-col,
 .region-col,
@@ -187,6 +199,11 @@ a {
   background-color: #fff;
 }
 
+#empty-values-badge {
+  background-color: var(--secondary-color) !important;
+}
+
+/* CARDS */
 .card {
   padding: 1rem;
   background-color: var(--primary-color) !important;
@@ -205,19 +222,9 @@ a {
   width: 75%;
 }
 
-.info-row {
-  background-color: #fff;
-}
-
-form {
-  padding-bottom: 3rem;
-}
-
-.wave {
-  width: 100%;
-  background-color: #fff;
-}
-
-.chart-card {
-  background-color: #fff;
+/* MEDIA QUERIES */
+@media (max-width: 1200px) {
+  .chart-container {
+    height: 40vw;
+  }
 }

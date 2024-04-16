@@ -5,7 +5,7 @@ export default function About() {
   return (
     <>
       <div className='row info-row'>
-        <div className='px-5'>
+        <div className='px-5 pt-5'>
           <div className='row justify-content-evenly'>
             <div className='card text-white col-5 info-card align-items-center pb-3'>
               <img src={statisticsPic1} alt='' className='w-25 pt-3' />
@@ -36,7 +36,7 @@ export default function About() {
         <svg className='wave' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
           <path
             fill='#7DBFEB'
-            fill-opacity='1'
+            fillOpacity='1'
             d='M0,160L120,170.7C240,181,480,203,720,181.3C960,160,1200,96,1320,64L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z'></path>
         </svg>
       </div>
