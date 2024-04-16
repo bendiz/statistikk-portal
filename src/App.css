@@ -80,16 +80,6 @@ form {
   background-color: var(--secondary-color) !important;
 }
 
-/* Hover på option */
-.css-tr4s17-option:hover {
-  background-color: #9fd0ef8d !important;
-}
-
-/* Select option som er i fokus */
-.css-d7l1ni-option {
-  background-color: #9fd0ef70 !important;
-}
-
 /* Søkeikon på innsiden av søkebar */
 .css-1xc3v61-indicatorContainer {
   fill: hsl(0, 0%, 80%);

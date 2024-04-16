@@ -9,7 +9,7 @@ export default function About() {
           <div className='row justify-content-evenly'>
             <div className='card text-white col-5 info-card align-items-center pb-3'>
               <img src={statisticsPic1} alt='' className='w-25 pt-3' />
-              <h5 className='card-header card-title mt-3'>Hvordan hentes dataene fra?</h5>
+              <h5 className='card-header card-title mt-3'>Hvor hentes dataene fra?</h5>
               <div className='card-body p-4'>
                 <h6 className='card-title'>Statistisk sentralbyrå</h6>
                 <p className='card-text opacity-75'>
