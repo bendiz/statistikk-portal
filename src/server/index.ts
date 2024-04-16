@@ -10,28 +10,6 @@ const port = 3000;
 
 app.use(express.json());
 
-app.post(
-  '/api/submit',
-  CatchAsync(async (req: Request, res: Response, _next: NextFunction) => {
-    const selectedOptions = req.body;
-
-    if (selectedOptions.region.length < 2 || selectedOptions.year.length < 3 || selectedOptions.variabel.length > 1) {
-      throw new ExpressError('Invalid query', 500);
-    } else {
-      const selectionQuery = createTableQuery(selectedOptions);
-      const externalResponse = await fetch(tableUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(selectionQuery),
-      });
-      const externalData = await externalResponse.json();
-      res.json(externalData);
-    }
-  })
-);
-
 app.get(
   '/api/region/:region',
   CatchAsync(async (req: Request, res: Response, _next: NextFunction) => {
@@ -64,14 +42,36 @@ app.get(
   })
 );
 
+app.post(
+  '/api/submit',
+  CatchAsync(async (req: Request, res: Response, _next: NextFunction) => {
+    const selectedOptions = req.body;
+
+    if (selectedOptions.region.length < 2 || selectedOptions.year.length < 3 || selectedOptions.variabel.length > 1) {
+      throw new ExpressError('Ugyldig spørring', 500);
+    } else {
+      const selectionQuery = createTableQuery(selectedOptions);
+      const externalResponse = await fetch(tableUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectionQuery),
+      });
+      const externalData = await externalResponse.json();
+      res.json(externalData);
+    }
+  })
+);
+
 app.all('*', (_req: Request, _res: Response, next: NextFunction) => {
-  next(new ExpressError('Page not found', 404));
+  next(new ExpressError('Side ikke funnet', 404));
 });
 
 app.use((err: ExpressError, _: Request, res: Response, _next: NextFunction): void => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Oh no, something went wrong!';
-  res.status(statusCode).send(`Error ${err.statusCode}: ${err.message}. <a href="http://localhost:5173/">Click here to try again</a>`);
+  res.status(statusCode).send(`Error ${err.statusCode}: ${err.message}. <a href="http://localhost:5173/">Trykk her for å prøve igjen</a>`);
 });
 
 app.listen(port, () => {
